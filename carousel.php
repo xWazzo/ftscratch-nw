@@ -1,4 +1,10 @@
-<?php $carousel_query = new WP_Query( 'category_name=carousel' ); ?>
+<?php $args_carousel = array(
+	'category_name' => 'carousel',
+	'posts_per_page' => 4
+); ?>
+
+
+<?php $carousel_query = new WP_Query( $args_carousel ); ?>
 
 <?php if( $carousel_query->have_posts() ): ?>
 
