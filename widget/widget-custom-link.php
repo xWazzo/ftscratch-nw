@@ -31,15 +31,13 @@ class custom_link_widget extends WP_Widget {
 		$text = apply_filters( 'text', $instance['text'] );
 		$icon = apply_filters( 'icon', $instance['icon'] );
 		$image_url = apply_filters( 'image_url', $instance['image_url'] );
-		$a_class = apply_filters( 'a_class', $instance[ 'a_class' ] );
+		$custom_class = apply_filters( 'custom_class', $instance[ 'custom_class' ] );
 		?>
 
-		<div class="widget-custom-link">
+		<div class="widget-custom-link <?php echo $custom_class ?>">
 			<?php if($url): ?>
-				<?php if($a_class): ?>
-					<a href="<?php echo $url; ?>" class="<?php echo $a_class ?>">
-				<?php else: ?>
-					<a href="<?php echo $url; ?>">
+				<a href="<?php echo $url; ?>">
+				<a href="<?php echo $url; ?>">
 				<?php endif; ?>
 			<?php endif; ?>
 				
@@ -112,11 +110,11 @@ class custom_link_widget extends WP_Widget {
 			$image_url = __( '', 'my_image_url' );
 		}
 
-		if ( isset( $instance[ 'a_class' ] ) ) {
-			$a_class = $instance[ 'a_class' ];
+		if ( isset( $instance[ 'custom_class' ] ) ) {
+			$custom_class = $instance[ 'custom_class' ];
 		}
 		else{
-			$a_class = __( '', 'my_a_class' );
+			$custom_class = __( '', 'my_custom_class' );
 		}
 
 		?>
@@ -143,8 +141,8 @@ class custom_link_widget extends WP_Widget {
 		</p>
 
 		<p>
-		<label for="<?php echo $this->get_field_id( 'a_class' ); ?>"><?php _e( 'Css Class:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'a_class' ); ?>" name="<?php echo $this->get_field_name( 'a_class' ); ?>" type="text" value="<?php echo esc_attr( $a_class ); ?>" placeholder="primary-btn small" />
+		<label for="<?php echo $this->get_field_id( 'custom_class' ); ?>"><?php _e( 'Css Class:' ); ?></label> 
+		<input class="widefat" id="<?php echo $this->get_field_id( 'custom_class' ); ?>" name="<?php echo $this->get_field_name( 'custom_class' ); ?>" type="text" value="<?php echo esc_attr( $custom_class ); ?>" placeholder="primary-btn small" />
 		<span>Agrega clases a tu link.</span>
 		</p>
 
@@ -175,7 +173,7 @@ class custom_link_widget extends WP_Widget {
 		$instance['url'] = ( ! empty( $new_instance['url'] ) ) ? strip_tags( $new_instance['url'] ) : '';
 		$instance['icon'] = ( ! empty( $new_instance['icon'] ) ) ? strip_tags( $new_instance['icon'] ) : '';
 		$instance['image_url'] = ( ! empty( $new_instance['image_url'] ) ) ? strip_tags( $new_instance['image_url'] ) : '';
-		$instance['a_class'] = ( ! empty( $new_instance['a_class'] ) ) ? strip_tags( $new_instance['a_class'] ) : '';
+		$instance['custom_class'] = ( ! empty( $new_instance['custom_class'] ) ) ? strip_tags( $new_instance['custom_class'] ) : '';
 
 		return $instance;
 	}

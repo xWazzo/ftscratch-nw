@@ -79,9 +79,9 @@ new image size.
 // Sidebars & Widgetizes Areas
 function bones_register_sidebars() {
 	register_sidebar(array(
-		'id' => 'sidebar1',
-		'name' => __( 'Sidebar 1', 'bonestheme' ),
-		'description' => __( 'The first (primary) sidebar.', 'bonestheme' ),
+		'id' => 'sidebar1', // Change the id
+		'name' => 'Sidebar 1', // Change the name
+		'description' => 'The first (primary) sidebar.',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
 		'before_title' => '<h4 class="widgettitle">',
@@ -164,5 +164,29 @@ function bones_wpsearch($form) {
 	</form>';
 	return $form;
 } // don't remove this bracket!
+
+
+// ====================================
+// Custom Support 
+// ====================================
+
+
+
+// -----------------------------------
+// Add Page attribute "Page Order" to Posts.
+// -----------------------------------
+
+// add_action( 'admin_init', 'posts_order_wpse_91866' );
+
+// function posts_order_wpse_91866() 
+// {
+//     add_post_type_support( 'post', 'page-attributes' );
+// }
+
+
+//*************************** Widgets Import *************************** //
+
+require_once( 'widget/widget-custom-link.php' ); // Agrega un custom url, icon o imagen.
+require_once( 'widget/widget-plain-text.php' ); // Agrega un custom url, icon o imagen.
 
 ?>
