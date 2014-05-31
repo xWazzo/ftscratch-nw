@@ -38,7 +38,6 @@ class custom_link_widget extends WP_Widget {
 			<?php if($url): ?>
 				<a href="<?php echo $url; ?>">
 				<a href="<?php echo $url; ?>">
-				<?php endif; ?>
 			<?php endif; ?>
 				
 				<?php if($icon): ?>
