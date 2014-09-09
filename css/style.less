@@ -3,18 +3,19 @@
 
 @import "under-construction.css"; // REMOVE THIS when you start your css. 
 @import "wordpress.css";
-@import "../lib/font-awesome-4.0.3/css/font-awesome.min.css"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
+@import "../lib/font-awesome-4.1.0/css/font-awesome.min.css"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
 
 
-@import "../lib/bootstrap-3.0.3/less/bootstrap.less"; // Bootstrap Docs: http://getbootstrap.com/
+@import "../lib/bootstrap-3.2.0/less/bootstrap.less"; // Bootstrap Docs: http://getbootstrap.com/
 // .container{ width: 970px !important; } // Bootstrap Disabling responsiveness Docs: http://getbootstrap.com/getting-started/#disable-responsive
+// .container-fluid{ min-width: 970px !important; } // Bootstrap Disabling responsiveness Docs: http://getbootstrap.com/getting-started/#disable-responsive
 
 
 //	Fix any path's of your libs Here
 // ------------------------------------
 
-@fa-font-path:        "../lib/font-awesome-4.0.3/fonts/"; // Font-Awesome Icon Path Fix
-@icon-font-path:          "../lib/bootstrap-3.0.3/fonts/"; // Bootstrap Icon Path Fix
+// @fa-font-path:        "../lib/font-awesome-4.1.0/fonts/"; // Font-Awesome Icon Path Fix
+@icon-font-path:          "../lib/bootstrap-3.2.0/fonts/"; // Bootstrap Icon Path Fix
 
 //	My Fonts Here
 // ------------------------------------
@@ -28,23 +29,25 @@
 // }
 
 // @primaryFontFamily: @CustomFontFamilyFontFamily;
-// @secondaryFontFamily: Georgia, "Your-Serif FontFamily", Times, serif;
+// @secondaryFontFamily: @SecondCustomFontFamily;
 //
-// @CustomFontFamilyFontFamily: @SecondCustomFontFamily;
-// @SecondCustomFontFamily: Georgia, "Your-Serif FontFamily", Times, serif
+// @CustomFontFamilyFontFamily: "Your-Sanserif Font Family", Arial, sans-serif;
+// @SecondCustomFontFamily: Georgia, "Your-Serif FontFamily", Times, serif;
 
 
 
 //	Variables
 // ------------------------------------
 
+@black:						#000;
+@white:						#fff;
 
 
 // ====================================
 //	General Selectors
 // ====================================
 
-body{}
+body{ font-size: 12px; color: @black; }
 
 h1, h2, h3, h4, h5, h6{}
 
@@ -56,15 +59,57 @@ li{}
 
 p{}
 
+blockquote{}
+
 // General Clases
 // ====================================
 
 .none{ display: none; }
+.relative{ position: relative; }
+.absolute{ position: absolute; }
+.fixed{ position: fixed; }
 
+.t-left{ text-align: left; }
+.t-right{ text-align: right; }
+.t-center{ text-align: center; }
+
+
+// Wordpress Gallery
+// ====================================
+
+.gallery-item{
+	padding: 0 10px;
+
+	img{
+		width: 100%;
+		height: auto;
+	}
+}
+
+
+.wp-caption{
+
+	a{ display: block; }
+
+	img{ }
+}
+
+.wp-caption p.wp-caption-text, .wp-caption-text{
+	font-weight: 400;
+	font-size: 1.2em;
+	line-height: 1em;
+	padding: 15px 0 10px;
+}
+
+.gallery-columns-3{
+	.gallery-item{ width: 33.3% !important; }
+}
 
 
 // Header // Your Main Header Css goes here.
 // ====================================
+
+// #main-header{ }
 
 // @import "dropdown_menu.less"; // Use this Dropdown Menu to save time
 
@@ -72,6 +117,17 @@ p{}
 //	Index
 // ====================================
 
+
+
+// Carousel
+// ====================================
+
+.carousel-slide{
+	height: 460px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
 
 
 // Components
@@ -84,7 +140,7 @@ p{}
 // Footer // Your Main Footer Css goes here.
 // ====================================
 
-
+// #main-footer{ }
 
 
 

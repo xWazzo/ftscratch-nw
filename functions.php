@@ -1,6 +1,6 @@
 <?php
 
-/* Edited by NuevaWeb to make it simple */
+/* Edited by NuevaWeb to make it simpler */
 
 /*
 Author: Eddie Machado
@@ -30,7 +30,7 @@ require_once( 'lib/ftscratch-support/theme_support.php' );
 
 // Thumbnail sizes
 // add_image_size( 'slide-1500-500', 1500, 500, true );
-// add_image_size( 'slide-1920-460', 1920, 460, true );
+add_image_size( 'slide-1920-460', 1920, 460, true ); // default fullwith carousel slide
 
 add_image_size( 'bg-thumbnail', 640, 480, true );
 add_image_size( 'md-thumbnail', 360, 270, true );
@@ -155,16 +155,6 @@ function bones_comments( $comment, $args, $depth ) {
 
 /************* SEARCH FORM LAYOUT *****************/
 
-// Search Form
-function bones_wpsearch($form) {
-	$form = '<form role="search" method="get" id="searchform" action="' . home_url( '/' ) . '" >
-	<label class="screen-reader-text" for="s">' . __( 'Search for:', 'bonestheme' ) . '</label>
-	<input type="text" value="' . get_search_query() . '" name="s" id="s" placeholder="' . esc_attr__( 'Search the Site...', 'bonestheme' ) . '" />
-	<input type="submit" id="searchsubmit" value="' . esc_attr__( 'Search' ) .'" />
-	</form>';
-	return $form;
-} // don't remove this bracket!
-
 
 // ====================================
 // Custom Support 
@@ -176,17 +166,17 @@ function bones_wpsearch($form) {
 // Add Page attribute "Page Order" to Posts.
 // -----------------------------------
 
-// add_action( 'admin_init', 'posts_order_wpse_91866' );
+add_action( 'admin_init', 'posts_order_wpse_91866' );
 
-// function posts_order_wpse_91866() 
-// {
-//     add_post_type_support( 'post', 'page-attributes' );
-// }
+function posts_order_wpse_91866() 
+{
+    add_post_type_support( 'post', 'page-attributes' );
+}
 
 
 //*************************** Widgets Import *************************** //
 
-require_once( 'widget/widget-custom-link.php' ); // Agrega un custom url, icon o imagen.
-require_once( 'widget/widget-plain-text.php' ); // Agrega un custom url, icon o imagen.
+// require_once( 'widget/widget-custom-link.php' ); // Agrega un custom url, icon o imagen.
+// require_once( 'widget/widget-plain-text.php' ); // Agrega un custom url, icon o imagen.
 
 ?>

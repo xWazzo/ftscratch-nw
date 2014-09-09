@@ -35,10 +35,7 @@
 
 	<?php 
 	/*
-	* El NuevaWeb Default Theme ya viene separado y con alguas etiquetas que te servirán
-	* para iniciar tu proyecto.
-	* 
-	* 
+	*
 	* El css que genera el "En Construcción" está salvado en el archivo .less
 	* únicamente comenta la línea o elimínala para quitar el display en construcción
 	*
@@ -48,6 +45,13 @@
 	*/
 	?>
 
-	<header>
+	<header id="main-header">
+		<!-- <a class="main-logo" href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>">
+			<h1 class="none"><?php bloginfo('name'); ?></h1>
+		</a> -->
 		<h1>En construcción</h1>
-	</header>
+		<?php nw_main_nav(); ?>
+	</header><!-- end #main-header -->
+
+
+

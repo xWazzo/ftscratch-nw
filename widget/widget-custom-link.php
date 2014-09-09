@@ -1,42 +1,83 @@
 <?php
-//*************************** Widget Custom Link Begins Here ***************************//
+/**
+ * Plugin Name: Custom Widget
+ * Plugin URI: http://nuevaweb.com.mx/widget-custom-link
+ * Description: A widget that make custom links with icon, image, url and text.
+ * Author: Carlos González
+ * Author URI: http://nuevaweb.com.mx/
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
 /**
- * Adds custom_link_widget widget.
+ * Add function to widgets_init that'll load our widget.
+ * @since 0.1
  */
-class custom_link_widget extends WP_Widget {
+add_action( 'widgets_init', 'widget_custom_link' );
+
+/**
+ * Register our widget.
+ * 'Custom_Link' is the widget class used below.
+ *
+ * @since 0.1
+ */
+function widget_custom_link() {
+	register_widget( 'Custom_Link' );
+}
+
+/**
+ * Custom Link class.
+ * This class handles everything that needs to be handled with the widget:
+ * the settings, form, display, and update.  Nice!
+ *
+ * @since 0.1
+ */
+class Custom_Link extends WP_Widget {
 
 	/**
-	 * Register widget with WordPress.
+	 * Widget setup.
 	 */
-	function __construct() {
+	function Custom_Link() {
+		/* Widget settings. */
+		$widget_ops = array( 
+			'classname' => 'CustomLink', 
+			'description' => __('Agrega un link con url, imágen, ícono de FontAwesome y/o texto.', 'CustomLink') 
+			);
 
-		parent::__construct(
-			'custom_link_widget', // Base ID
-			__('Custom Link', 'text_domain'), // Name
-			array( 'description' => __( 'Agrega un link con url, imágen, ícono de FontAwesome y/o texto.' ), ) // Args
-		);
+		/* Widget control settings. */
+		$control_ops = array( 
+			'width' => 300,
+		 	'height' => 350, 
+		 	'id_base' => 'custom-link' 
+		 	);
+
+		/* Create the widget. */
+		$this->WP_Widget( 'custom-link', __('Custom Link', 'CustomLink'), $widget_ops, $control_ops );
 	}
 
 	/**
-	 * Front-end display of widget.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
+	 * How to display the widget on the screen.
 	 */
-	public function widget( $args, $instance ) {
-		$url = apply_filters( 'widget_url', $instance['url'] );
-		$text = apply_filters( 'text', $instance['text'] );
-		$icon = apply_filters( 'icon', $instance['icon'] );
-		$image_url = apply_filters( 'image_url', $instance['image_url'] );
-		$custom_class = apply_filters( 'custom_class', $instance[ 'custom_class' ] );
-		?>
+	function widget( $args, $instance ) {
+		extract( $args );
 
-		<div class="widget-custom-link <?php echo $custom_class ?>">
+		/* Our variables from the widget settings. */
+		$title = apply_filters('widget_title', $instance['title'] );
+		$url = $instance['url'];
+		$icon = $instance['icon'];
+		$image_url = $instance['image_url'];
+		$custom_class = $instance['custom_class'];
+	?>
+
+	<div class="widget-custom-link">
+
+		<?php if($custom_class): ?>
+			<div class="widget-custom-link-class <?php echo $custom_class ?>">
+		<?php endif; ?>
+
 			<?php if($url): ?>
-				<a href="<?php echo $url; ?>">
 				<a href="<?php echo $url; ?>">
 			<?php endif; ?>
 				
@@ -52,138 +93,97 @@ class custom_link_widget extends WP_Widget {
 					</div><!-- end .widget-custom-link-image -->
 				<?php endif; ?>
 
-				<?php if($text): ?>
-					<div class="widget-custom-link-text">
-						<p><?php echo $text; ?></p>
-					</div><!-- end .widget-custom-link-text -->
+				<?php if($title): ?>
+					<div class="widget-custom-link-title">
+						<p><?php echo $title; ?></p>
+					</div><!-- end .widget-custom-link-title -->
 				<?php endif; ?>
 
 			<?php if($url): ?>
 				</a>
 			<?php endif; ?>
-		</div>
 
-		
+		<?php if($custom_class): ?>
+			</div><!-- end .widget-custom-link-class -->
+		<?php endif; ?>				
+	</div>
 
-		<?php
-
+	<?php	
 	}
 
 	/**
-	 * Back-end widget form.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
+	 * Update the widget settings.
 	 */
-	public function form( $instance ) { ?>
+	function update( $new_instance, $old_instance ) {
+		$instance = $old_instance;
 
-	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/css/widget-jamba-sugiere.css">
-
-	<?php 
-		if ( isset( $instance[ 'url' ] ) ) {
-			$url = $instance[ 'url' ];
-		}
-		else{
-			$url = __( '', 'my_url' );
-		}
-
-		if ( isset( $instance[ 'text' ] ) ) {
-			$text = $instance[ 'text' ];
-		}
-		else{
-			$text = __( '', 'text_domain' );
-		}
-
-		if ( isset( $instance[ 'icon' ] ) ) {
-			$icon = $instance[ 'icon' ];
-		}
-		else{
-			$icon = __( '', 'my_icon' );
-		}
-
-		if ( isset( $instance[ 'image_url' ] ) ) {
-			$image_url = $instance[ 'image_url' ];
-		}
-		else{
-			$image_url = __( '', 'my_image_url' );
-		}
-
-		if ( isset( $instance[ 'custom_class' ] ) ) {
-			$custom_class = $instance[ 'custom_class' ];
-		}
-		else{
-			$custom_class = __( '', 'my_custom_class' );
-		}
-
-		?>
-
-		<p>
-		<label for="<?php echo $this->get_field_id( 'text' ); ?>"><?php _e( 'Texto:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'text' ); ?>" name="<?php echo $this->get_field_name( 'text' ); ?>" type="text" value="<?php echo esc_attr( $text ); ?>" />
-		</p>
-
-		<p>
-		<label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e( 'URL:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" type="text" value="<?php echo esc_attr( $url ); ?>" placeholder="http://www." />
-		</p>
-
-		<p>
-		<label for="<?php echo $this->get_field_id( 'icon' ); ?>"><?php _e( 'icon:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'icon' ); ?>" name="<?php echo $this->get_field_name( 'icon' ); ?>" type="text" value="<?php echo esc_attr( $icon ); ?>" placeholder="fa fa-facebook" />
-		<span>Consigue el nombre del ícono de <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome</a>. <strong>Recuerda</strong> agrega fa antes de tu fa-icon, p,ej: <strong>fa fa-facebook</strong></span>
-		</p>
-
-		<p>
-		<label for="<?php echo $this->get_field_id( 'image_url' ); ?>"><?php _e( 'Image URL:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'image_url' ); ?>" name="<?php echo $this->get_field_name( 'image_url' ); ?>" type="text" value="<?php echo esc_attr( $image_url ); ?>" placeholder="http://www." />
-		</p>
-
-		<p>
-		<label for="<?php echo $this->get_field_id( 'custom_class' ); ?>"><?php _e( 'Css Class:' ); ?></label> 
-		<input class="widefat" id="<?php echo $this->get_field_id( 'custom_class' ); ?>" name="<?php echo $this->get_field_name( 'custom_class' ); ?>" type="text" value="<?php echo esc_attr( $custom_class ); ?>" placeholder="primary-btn small" />
-		<span>Agrega clases a tu link.</span>
-		</p>
-
-		<!-- <p>
-			<code>
-				<pre>
-					<?php var_dump($instance); ?>
-				</pre>
-			</code>
-		</p> -->
-
-		<?php 
-	}
-
-	/**
-	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {
-		$instance = array();
-		$instance['text'] = ( ! empty( $new_instance['text'] ) ) ? strip_tags( $new_instance['text'] ) : '';
-		$instance['url'] = ( ! empty( $new_instance['url'] ) ) ? strip_tags( $new_instance['url'] ) : '';
-		$instance['icon'] = ( ! empty( $new_instance['icon'] ) ) ? strip_tags( $new_instance['icon'] ) : '';
-		$instance['image_url'] = ( ! empty( $new_instance['image_url'] ) ) ? strip_tags( $new_instance['image_url'] ) : '';
-		$instance['custom_class'] = ( ! empty( $new_instance['custom_class'] ) ) ? strip_tags( $new_instance['custom_class'] ) : '';
+		/* Strip tags for title and name to remove HTML (important for text inputs). */
+		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['url'] = strip_tags( $new_instance['url'] );
+		$instance['icon'] = strip_tags( $new_instance['icon'] );
+		$instance['image_url'] = strip_tags( $new_instance['image_url'] );
+		$instance['custom_class'] = strip_tags( $new_instance['custom_class'] );
 
 		return $instance;
 	}
 
-} // class custom_link_widget
+	/**
+	 * Displays the widget settings controls on the widget panel.
+	 * Make use of the get_field_id() and get_field_name() function
+	 * when creating your form elements. This handles the confusing stuff.
+	 */
+	function form( $instance ) {
 
-// register custom_link_widget widget
-function register_custom_link_widget() {
-    register_widget( 'custom_link_widget' );
+		/* Set up some default widget settings. */
+		$defaults = array( 
+			// 'title' => __('Link name', 'CustomLink'),
+		 // 	'name' => __('', 'CustomLink'),
+		 // 	'sex' => 'male', 
+		 // 	'show_sex' => true 
+
+		 	'title' => __('Link name', 'CustomLink'),
+			'url' => __('', 'CustomLink'),
+			'icon' => __('', 'CustomLink'),
+			'image_url' => __('', 'CustomLink'),
+			'custom_class' => __('', 'CustomLink')
+
+		 	);
+		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
+
+		<!-- Widget Title: Text Input -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Título:', 'hybrid'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+		</p>
+
+		<!-- Your URL: Text Input -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e('URL:', 'CustomLink'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" value="<?php echo $instance['url']; ?>" style="width:100%;" placeholder="http://www."/>
+		</p>
+
+		<!-- Your Icon: Text Input -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'icon' ); ?>"><?php _e('Icon:', 'CustomLink'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'icon' ); ?>" name="<?php echo $this->get_field_name( 'icon' ); ?>" value="<?php echo $instance['icon']; ?>" style="width:100%;" placeholder="fa fa-facebook"/>
+			<span>Consigue el nombre del ícono de <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome</a>. <strong>Recuerda</strong> agrega fa antes de tu fa-icon, p,ej: <strong>fa fa-facebook</strong></span>
+		</p>
+
+		<!-- Your Custom Css Class: Text Input -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'custom_class' ); ?>"><?php _e('Css Class:', 'CustomLink'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'custom_class' ); ?>" name="<?php echo $this->get_field_name( 'custom_class' ); ?>" value="<?php echo $instance['custom_class']; ?>" style="width:100%;" placeholder="primary-btn small"/>
+			<span>Agrega clases a tu link.</span>
+		</p>
+
+		<!-- Your Image URL: Text Input -->
+		<p>
+			<label for="<?php echo $this->get_field_id( 'image_url' ); ?>"><?php _e('Image URL:', 'CustomLink'); ?></label>
+			<input id="<?php echo $this->get_field_id( 'image_url' ); ?>" name="<?php echo $this->get_field_name( 'image_url' ); ?>" value="<?php echo $instance['image_url']; ?>" style="width:100%;" placeholder="http://www."/>
+		</p>
+
+	<?php
+	}
 }
-add_action( 'widgets_init', 'register_custom_link_widget' );
 
-//*************************** Widget Custom Link Ends Here ***************************//
 ?>

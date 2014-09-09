@@ -214,7 +214,7 @@ function bones_theme_support() {
 			'main-nav' => '[Header] Main Menu',
 			// 'secondary-nav' => '[Header] Secondary Menu',
 
-			// 'footer-main-nav' => '[Footer] Main Menu',
+			'footer-main-nav' => '[Footer] Main Menu',
 
 			// 'footer-first-col-nav' => '[Footer] First Menu',
 			// 'footer-second-col-nav' => '[Footer] Second Menu',
@@ -231,58 +231,193 @@ function bones_theme_support() {
 MENUS & NAVIGATION
 *********************/
 
-// the main menu
-function bones_main_nav() {
-	// display the wp3 menu if available
+function nw_utilities_nav(){
 	wp_nav_menu(array(
-		'container' => false,                           // remove nav container
-		'container_class' => 'menu clearfix',           // class of container (should you choose to use it)
-		'menu' => __( 'The Main Menu', 'bonestheme' ),  // nav name
-		'menu_class' => 'nav top-nav clearfix',         // adding custom nav class
-		'theme_location' => 'main-nav',                 // where it's located in the theme
-		'before' => '',                                 // before the menu
-		'after' => '',                                  // after the menu
-		'link_before' => '',                            // before each link
-		'link_after' => '',                             // after each link
-		'depth' => 0,                                   // limit the depth of the nav
-		'fallback_cb' => 'bones_main_nav_fallback'      // fallback function
+		'theme_location' => 'utilities-nav',
+		'menu'            => 'utilities-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'utilities-nav-container',  // You can put the col-xs-X here
+		'container_id'    => 'utilities-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'utilities-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => -1,
+		'walker'          => ''
 	));
-} /* end bones main nav */
-
-// the footer menu (should you choose to use one)
-function bones_footer_links() {
-	// display the wp3 menu if available
-	wp_nav_menu(array(
-		'container' => '',                              // remove nav container
-		'container_class' => 'footer-links clearfix',   // class of container (should you choose to use it)
-		'menu' => __( 'Footer Links', 'bonestheme' ),   // nav name
-		'menu_class' => 'nav footer-nav clearfix',      // adding custom nav class
-		'theme_location' => 'footer-links',             // where it's located in the theme
-		'before' => '',                                 // before the menu
-		'after' => '',                                  // after the menu
-		'link_before' => '',                            // before each link
-		'link_after' => '',                             // after each link
-		'depth' => 0,                                   // limit the depth of the nav
-		'fallback_cb' => 'bones_footer_links_fallback'  // fallback function
-	));
-} /* end bones footer link */
-
-// this is the fallback for header menu
-function bones_main_nav_fallback() {
-	wp_page_menu( array(
-		'show_home' => true,
-		'menu_class' => 'nav top-nav clearfix',      // adding custom nav class
-		'include'     => '',
-		'exclude'     => '',
-		'echo'        => true,
-		'link_before' => '',                            // before each link
-		'link_after' => ''                             // after each link
-	) );
 }
 
-// this is the fallback for footer menu
-function bones_footer_links_fallback() {
-	/* you can put a default here if you like */
+function nw_main_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'main-nav',
+		'menu'            => 'main-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'main-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'main-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'main-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => 0,
+		'walker'          => ''
+	));
+}
+
+function nw_secondary_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'secondary-nav',
+		'menu'            => 'secondary-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'secondary-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'secondary-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'secondary-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => 0,
+		'walker'          => ''
+	));
+}
+
+function nw_footer_main_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'footer-main-nav',
+		'menu'            => 'footer-main-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'footer-main-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'footer-main-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'footer-main-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => -1,
+		'walker'          => ''
+	));
+}
+
+function nw_footer_first_col_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'footer-first-col-nav',
+		'menu'            => 'footer-first-col-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'footer-first-col-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'footer-first-col-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'footer-first-col-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => -1,
+		'walker'          => ''
+	));
+}
+
+function nw_footer_second_col_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'footer-second-col-nav',
+		'menu'            => 'footer-second-col-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'footer-second-col-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'footer-second-col-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'footer-second-col-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => -1,
+		'walker'          => ''
+	));
+}
+
+function nw_footer_third_col_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'footer-third-col-nav',
+		'menu'            => 'footer-third-col-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'footer-third-col-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'footer-third-col-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'footer-third-col-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => -1,
+		'walker'          => ''
+	));
+}
+
+function nw_footer_fourth_col_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'footer-fourth-col-nav',
+		'menu'            => 'footer-fourth-col-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'footer-fourth-col-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'footer-fourth-col-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'footer-fourth-col-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => -1,
+		'walker'          => ''
+	));
+}
+
+function nw_footer_legal_nav(){
+	wp_nav_menu(array(
+		'theme_location' => 'footer-legal-nav',
+		'menu'            => 'footer-legal-nav', // The menu that is desired; accepts (matching in order) id, slug, name
+		'container'       => 'nav',
+		'container_class' => 'footer-legal-nav-container', // You can put the col-xs-X here
+		'container_id'    => 'footer-legal-nav',
+		'menu_class'      => 'menu',
+		'menu_id'         => 'footer-legal-nav-menu',
+		'echo'            => true,
+		'fallback_cb'     => false,
+		'before'          => '',
+		'after'           => '',
+		'link_before'     => '',
+		'link_after'      => '',
+		'items_wrap'      => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+		'depth'           => -1,
+		'walker'          => ''
+	));
 }
 
 /*********************
@@ -357,7 +492,7 @@ function bones_filter_ptags_on_images($content){
 function bones_excerpt_more($more) {
 	global $post;
 	// edit here if you like
-	return '...  <a class="excerpt-read-more" href="'. get_permalink($post->ID) . '" title="'. __( 'Read', 'bonestheme' ) . get_the_title($post->ID).'">'. __( 'Read more &raquo;', 'bonestheme' ) .'</a>';
+	return '...  <a class="excerpt-read-more" href="'. get_permalink($post->ID) . '" title="'. __( 'Leer', 'nuevaweb' ) . get_the_title($post->ID).'">'. __( 'Leer Más &raquo;', 'nuevaweb' ) .'</a>';
 }
 
 /*
