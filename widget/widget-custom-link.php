@@ -64,7 +64,9 @@ class Custom_Link extends WP_Widget {
 		extract( $args );
 
 		/* Our variables from the widget settings. */
-		$title = apply_filters('widget_title', $instance['title'] );
+		$title = apply_filters('title', $instance['title'] );
+		$link_title = $instance['link_title'];
+		$url = $instance['url'];
 		$url = $instance['url'];
 		$icon = $instance['icon'];
 		$image_url = $instance['image_url'];
@@ -93,9 +95,9 @@ class Custom_Link extends WP_Widget {
 					</div><!-- end .widget-custom-link-image -->
 				<?php endif; ?>
 
-				<?php if($title): ?>
+				<?php if($link_title): ?>
 					<div class="widget-custom-link-title">
-						<p><?php echo $title; ?></p>
+						<p><?php echo $link_title; ?></p>
 					</div><!-- end .widget-custom-link-title -->
 				<?php endif; ?>
 
@@ -119,6 +121,7 @@ class Custom_Link extends WP_Widget {
 
 		/* Strip tags for title and name to remove HTML (important for text inputs). */
 		$instance['title'] = strip_tags( $new_instance['title'] );
+		$instance['link_title'] = strip_tags( $new_instance['link_title'] );
 		$instance['url'] = strip_tags( $new_instance['url'] );
 		$instance['icon'] = strip_tags( $new_instance['icon'] );
 		$instance['image_url'] = strip_tags( $new_instance['image_url'] );
@@ -135,13 +138,9 @@ class Custom_Link extends WP_Widget {
 	function form( $instance ) {
 
 		/* Set up some default widget settings. */
-		$defaults = array( 
-			// 'title' => __('Link name', 'CustomLink'),
-		 // 	'name' => __('', 'CustomLink'),
-		 // 	'sex' => 'male', 
-		 // 	'show_sex' => true 
-
-		 	'title' => __('Link name', 'CustomLink'),
+		$defaults = array(
+		 	'title' => __('My CustomLink', 'CustomLink'),
+		 	'link_title' => __('', 'CustomLink'),
 			'url' => __('', 'CustomLink'),
 			'icon' => __('', 'CustomLink'),
 			'image_url' => __('', 'CustomLink'),
@@ -150,37 +149,50 @@ class Custom_Link extends WP_Widget {
 		 	);
 		$instance = wp_parse_args( (array) $instance, $defaults ); ?>
 
-		<!-- Widget Title: Text Input -->
-		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Título:', 'hybrid'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
-		</p>
+		<style type="text/css">
+			.customLink span{ font-size: .8em; }
+		</style>
 
-		<!-- Your URL: Text Input -->
-		<p>
-			<label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e('URL:', 'CustomLink'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" value="<?php echo $instance['url']; ?>" style="width:100%;" placeholder="http://www."/>
-		</p>
+		<div class="customLink">
+			<!-- Widget Title: Text Input -->
+			<p>
+				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Widget Title:', 'hybrid'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+				<span>This is the name of the widget. It wont be displayed on the website.</span>
+			</p>
 
-		<!-- Your Icon: Text Input -->
-		<p>
-			<label for="<?php echo $this->get_field_id( 'icon' ); ?>"><?php _e('Icon:', 'CustomLink'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'icon' ); ?>" name="<?php echo $this->get_field_name( 'icon' ); ?>" value="<?php echo $instance['icon']; ?>" style="width:100%;" placeholder="fa fa-facebook"/>
-			<span>Consigue el nombre del ícono de <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome</a>. <strong>Recuerda</strong> agrega fa antes de tu fa-icon, p,ej: <strong>fa fa-facebook</strong></span>
-		</p>
+			<!-- Your Title: Text Input -->
+			<p>
+				<label for="<?php echo $this->get_field_id( 'link_title' ); ?>"><?php _e('Title:', 'CustomLink'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'link_title' ); ?>" name="<?php echo $this->get_field_name( 'link_title' ); ?>" value="<?php echo $instance['link_title']; ?>" style="width:100%;" />
+			</p>
 
-		<!-- Your Custom Css Class: Text Input -->
-		<p>
-			<label for="<?php echo $this->get_field_id( 'custom_class' ); ?>"><?php _e('Css Class:', 'CustomLink'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'custom_class' ); ?>" name="<?php echo $this->get_field_name( 'custom_class' ); ?>" value="<?php echo $instance['custom_class']; ?>" style="width:100%;" placeholder="primary-btn small"/>
-			<span>Agrega clases a tu link.</span>
-		</p>
+			<!-- Your URL: Text Input -->
+			<p>
+				<label for="<?php echo $this->get_field_id( 'url' ); ?>"><?php _e('URL:', 'CustomLink'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'url' ); ?>" name="<?php echo $this->get_field_name( 'url' ); ?>" value="<?php echo $instance['url']; ?>" style="width:100%;" placeholder="http://www."/>
+			</p>
 
-		<!-- Your Image URL: Text Input -->
-		<p>
-			<label for="<?php echo $this->get_field_id( 'image_url' ); ?>"><?php _e('Image URL:', 'CustomLink'); ?></label>
-			<input id="<?php echo $this->get_field_id( 'image_url' ); ?>" name="<?php echo $this->get_field_name( 'image_url' ); ?>" value="<?php echo $instance['image_url']; ?>" style="width:100%;" placeholder="http://www."/>
-		</p>
+			<!-- Your Icon: Text Input -->
+			<p>
+				<label for="<?php echo $this->get_field_id( 'icon' ); ?>"><?php _e('Icon:', 'CustomLink'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'icon' ); ?>" name="<?php echo $this->get_field_name( 'icon' ); ?>" value="<?php echo $instance['icon']; ?>" style="width:100%;" placeholder="fa fa-facebook"/>
+				<span>Consigue el nombre del ícono de <a href="http://fontawesome.io/icons/" target="_blank">Font Awesome</a>. <strong>Recuerda</strong> agrega fa antes de tu fa-icon, p,ej: <strong>fa fa-facebook</strong></span>
+			</p>
+
+			<!-- Your Custom Css Class: Text Input -->
+			<p>
+				<label for="<?php echo $this->get_field_id( 'custom_class' ); ?>"><?php _e('Css Class:', 'CustomLink'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'custom_class' ); ?>" name="<?php echo $this->get_field_name( 'custom_class' ); ?>" value="<?php echo $instance['custom_class']; ?>" style="width:100%;" placeholder="primary-btn small"/>
+				<span>Agrega clases a tu link.</span>
+			</p>
+
+			<!-- Your Image URL: Text Input -->
+			<p>
+				<label for="<?php echo $this->get_field_id( 'image_url' ); ?>"><?php _e('Image URL:', 'CustomLink'); ?></label>
+				<input id="<?php echo $this->get_field_id( 'image_url' ); ?>" name="<?php echo $this->get_field_name( 'image_url' ); ?>" value="<?php echo $instance['image_url']; ?>" style="width:100%;" placeholder="http://www."/>
+			</p>
+		</div><!-- end .customLink-->
 
 	<?php
 	}

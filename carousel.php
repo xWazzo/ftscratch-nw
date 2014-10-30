@@ -33,21 +33,13 @@
 	  		<?php $thumb_img_src = wp_get_attachment_image_src( get_post_thumbnail_id(), 'slide-1920-460'); // Get the post thumbnail img src ?>
 			<?php $thumb_url_src = $thumb_img_src[0]; // set the thumbnail src url, to use it as a background ?>
 
-			<?php if( $i==0 ): ?>			
-	    		<div class="item active">
-			<?php else: ?>
-				<div class="item">
-			<?php endif; ?>
-			    	
-		    	<?php if( has_post_thumbnail() ): ?>
-		    		<style type="text/css">
-				  		.slide-<?php echo $i; ?>{ background-image: url(<?php echo $thumb_url_src; ?>); }
-				  	</style>
-
-		    		<div class="carousel-slide slide-<?php echo $i; ?>">
-	    		<?php else: ?>
-	    			<div class="carousel-slide">
-			    <?php endif; ?>
+			<div class="item <?php echo $i == 0 ? 'active':''; ?>">
+	    	<?php if( has_post_thumbnail() ): ?>
+	    		<style type="text/css">
+			  		.slide-<?php echo $i; ?>{ background-image: url(<?php echo $thumb_url_src; ?>); }
+			  	</style>
+		    <?php endif; ?>
+		    	<div class="carousel-slide <?php echo has_post_thumbnail() ? 'slide-'.$i : ''; ?>">
 
 			    <?php if( get_the_content() ): ?>
 					<div class="container">
@@ -57,12 +49,7 @@
 
 						    	<?php the_content(); ?>
 
-						    	<?php if($url[0]): ?>
-							    	<a class="primary-btn" href="<?php echo $url[0]; ?>">Ver más ≫</a>
-							    <?php else: ?>
-							    	<a class="primary-btn" href="<?php the_permalink(); ?>">Ver más ≫</a>
-							    <?php endif; ?>
-
+						    	<a class="primary-btn" href="<?php echo $url[0] ? $url[0] : get_the_permalink(); ?>">Ver más ≫</a>
 							</article><!-- end .col-xs-12 -->
 						</div><!-- end .row -->
 					</div><!-- end .container -->
@@ -76,10 +63,10 @@
 
 	<?php if( $sizeof_query > 1 ): ?>
 		<!-- Controls -->
-		<a class="left carousel-control" href="#main-carousel" data-slide="prev">
+		<a class="left carousel-control" data-target="#main-carousel" data-slide="prev">
 			<span class="glyphicon glyphicon-chevron-left"></span>
 		</a>
-		<a class="right carousel-control" href="#main-carousel" data-slide="next">
+		<a class="right carousel-control" data-target="#main-carousel" data-slide="next">
 			<span class="glyphicon glyphicon-chevron-right"></span>
 		</a>
 	<?php endif; ?>
