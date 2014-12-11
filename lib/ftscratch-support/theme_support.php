@@ -42,7 +42,7 @@ function bones_ahoy() {
 	// adding sidebars to Wordpress (these are created in functions.php)
 	add_action( 'widgets_init', 'bones_register_sidebars' );
 	// adding the bones search form (created in functions.php)
-	add_filter( 'get_search_form', 'bones_wpsearch' );
+	// add_filter( 'get_search_form', 'bones_wpsearch' );
 
 	// cleaning up random code around images
 	add_filter( 'the_content', 'bones_filter_ptags_on_images' );
@@ -221,7 +221,7 @@ function bones_theme_support() {
 			// 'footer-third-col-nav' => '[Footer] Third Menu',
 			// 'footer-fourth-col-nav' => '[Footer] Fourth Menu',
 
-			'footer-legal-nav' => '[Footer] Legal Menu'
+			// 'footer-legal-nav' => '[Footer] Legal Menu'
 		)
 	);
 } /* end bones theme support */

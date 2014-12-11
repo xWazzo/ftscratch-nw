@@ -177,6 +177,5 @@ function posts_order_wpse_91866()
 //*************************** Widgets Import *************************** //
 
 // require_once( 'widget/widget-custom-link.php' ); // Agrega un custom url, icon o imagen.
-// require_once( 'widget/widget-plain-text.php' ); // Agrega un custom url, icon o imagen.
 
 ?>

@@ -46,12 +46,48 @@
 	?>
 
 	<header id="main-header">
-		<!-- <a class="main-logo" href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>">
-			<h1 class="none"><?php bloginfo('name'); ?></h1>
-		</a> -->
-		<h1>En construcción</h1>
-		<?php nw_main_nav(); ?>
-	</header><!-- end #main-header -->
+		<nav class="navbar" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>">
+			      	<h1><?php bloginfo('name'): ?></h1>
+			      </a>
+			    </div>
+
+				<nav id="main-nav" class="collapse navbar-collapse">
+					<?php //nw_main_nav(); ?>
+					<ul class="nav navbar-nav">
+						<li><a href="#">Inicio</a></li>
+						<li><a href="#">Nosotros</a></li>
+						<li><a href="#">Proyectos</a>
+							<ul>
+								<li><a href="#">Lorem ipsum</a></li>
+								<li><a href="#">Lorem ipsum</a></li>
+								<li><a href="#">Lorem ipsum</a>
+									<ul>
+										<li><a href="#">Lorem ipsum</a></li>
+										<li><a href="#">Lorem ipsum</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li><a href="#">Blog</a></li>
+					</ul>
+					<div id="utilities-nav" class="hidden-xs">
+						<a href="#" title="Log In">Log In</a>
+						<div id="fullscreen" title="Fullscreen" class="fa fa-expand"></div>
+					</div>
+				</nav>
+
+			</div><!-- /.container-fluid -->
+		</nav><!-- /navbar -->
+	</header><!-- /#main-header -->
 
 
 
