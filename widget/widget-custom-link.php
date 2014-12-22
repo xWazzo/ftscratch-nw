@@ -73,41 +73,28 @@ class Custom_Link extends WP_Widget {
 		$custom_class = $instance['custom_class'];
 	?>
 
-	<div class="widget-custom-link">
+	<div class="widget-custom-link <?php echo $custom_class ? $custom_class : ''; ?>">
+		<?php echo $url ? '<a href="'.$url.'">':''; ?>
 
-		<?php if($custom_class): ?>
-			<div class="widget-custom-link-class <?php echo $custom_class ?>">
-		<?php endif; ?>
-
-			<?php if($url): ?>
-				<a href="<?php echo $url; ?>">
-			<?php endif; ?>
-				
-				<?php if($icon): ?>
-					<div class="widget-custom-link-icon">
-						<i class="<?php echo $icon; ?>"></i>
-					</div><!-- end .widget-custom-link-icon -->
-				<?php endif; ?>
-
-				<?php if($image_url): ?>
-					<div class="widget-custom-link-image">
-						<img src="<?php echo $image_url; ?>" title="<?php echo $text; ?>" alt="<?php echo $text; ?>" ?>
-					</div><!-- end .widget-custom-link-image -->
-				<?php endif; ?>
-
-				<?php if($link_title): ?>
-					<div class="widget-custom-link-title">
-						<p><?php echo $link_title; ?></p>
-					</div><!-- end .widget-custom-link-title -->
-				<?php endif; ?>
-
-			<?php if($url): ?>
-				</a>
+			<?php if($icon): ?>
+				<div class="widget-custom-link-icon">
+					<i class="<?php echo $icon; ?>"></i>
+				</div><!-- end .widget-custom-link-icon -->
 			<?php endif; ?>
 
-		<?php if($custom_class): ?>
-			</div><!-- end .widget-custom-link-class -->
-		<?php endif; ?>				
+			<?php if($image_url): ?>
+				<div class="widget-custom-link-image">
+					<img src="<?php echo $image_url; ?>" title="<?php echo $text; ?>" alt="<?php echo $text; ?>" ?>
+				</div><!-- end .widget-custom-link-image -->
+			<?php endif; ?>
+
+			<?php if($link_title): ?>
+				<div class="widget-custom-link-title">
+					<p><?php echo $link_title; ?></p>
+				</div><!-- end .widget-custom-link-title -->
+			<?php endif; ?>
+
+		<?php echo $url ? '</a>':''; ?>			
 	</div>
 
 	<?php	
