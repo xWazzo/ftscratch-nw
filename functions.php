@@ -15,14 +15,11 @@ sidebars, comments, ect.
 
 require_once( 'lib/ftscratch-support/admin.php' );
 
-require_once( 'lib/ftscratch-support/theme_support.php' );
+// require_once( 'lib/ftscratch-support/theme_support.php' );
 
 
 /*
-2. library/custom-post-type.php
-	- an example custom post type
-	- example custom taxonomy (like categories)
-	- example custom taxonomy (like tags)
+Create your own Post Type:
 */
 // require_once( 'lib/ftscratch-support/custom-post-type.php' ); // you can disable this if you like
 
@@ -77,7 +74,9 @@ new image size.
 /************* ACTIVE SIDEBARS ********************/
 
 // Sidebars & Widgetizes Areas
-function bones_register_sidebars() {
+function nw_register_sidebars() {
+	// DOCS: http://codex.wordpress.org/Function_Reference/dynamic_sidebar
+
 	register_sidebar(array(
 		'id' => 'sidebar1', // Change the id
 		'name' => 'Sidebar 1', // Change the name
@@ -88,30 +87,16 @@ function bones_register_sidebars() {
 		'after_title' => '</h4>',
 	));
 
-	/*
-	to add more sidebars or widgetized areas, just copy
-	and edit the above sidebar code. In order to call
-	your new sidebar just use the following code:
+	// register_sidebar(array(
+	// 	'id' => 'sidebar2', // Change the id
+	// 	'name' => 'Sidebar 2', // Change the name
+	// 	'description' => 'The first (primary) sidebar.', // Better change description too!
+	// 	'before_widget' => '<div id="%1$s" class="widget %2$s">',
+	// 	'after_widget' => '</div>',
+	// 	'before_title' => '<h4 class="widgettitle">',
+	// 	'after_title' => '</h4>',
+	// ));
 
-	Just change the name to whatever your new
-	sidebar's id is, for example:
-
-	register_sidebar(array(
-		'id' => 'sidebar2',
-		'name' => __( 'Sidebar 2', 'bonestheme' ),
-		'description' => __( 'The second (secondary) sidebar.', 'bonestheme' ),
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-		'after_widget' => '</div>',
-		'before_title' => '<h4 class="widgettitle">',
-		'after_title' => '</h4>',
-	));
-
-	To call the sidebar in your template, you can just copy
-	the sidebar.php file and rename it to your sidebar's name.
-	So using the above example, it would be:
-	sidebar-sidebar2.php
-
-	*/
 } // don't remove this bracket!
 
 /************* COMMENT LAYOUT *********************/
@@ -166,16 +151,35 @@ function bones_comments( $comment, $args, $depth ) {
 // Add Page attribute "Page Order" to Posts.
 // -----------------------------------
 
-add_action( 'admin_init', 'posts_order_wpse_91866' );
+// add_action( 'admin_init', 'posts_order_wpse_91866' );
 
-function posts_order_wpse_91866() 
-{
-    add_post_type_support( 'post', 'page-attributes' );
-}
+// function posts_order_wpse_91866() 
+// {
+//     add_post_type_support( 'post', 'page-attributes' );
+// }
 
 
 //*************************** Widgets Import *************************** //
 
 // require_once( 'widget/widget-custom-link.php' ); // Agrega un custom url, icon o imagen.
+// require_once( 'widget/widget-post-type-feed.php' ); // Agrega un custom url, icon o imagen.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ?>

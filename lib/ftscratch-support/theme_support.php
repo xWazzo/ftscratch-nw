@@ -40,7 +40,7 @@ function bones_ahoy() {
 	bones_theme_support();
 
 	// adding sidebars to Wordpress (these are created in functions.php)
-	add_action( 'widgets_init', 'bones_register_sidebars' );
+	add_action( 'widgets_init', 'nw_register_sidebars' );
 	// adding the bones search form (created in functions.php)
 	// add_filter( 'get_search_form', 'bones_wpsearch' );
 
@@ -455,29 +455,36 @@ function bones_related_posts() {
 PAGE NAVI
 *********************/
 
-// Numeric Page Navi (built into the theme by default)
-function bones_page_navi() {
+function nw_paginate_links(){
+	// DOCS: http://codex.wordpress.org/Function_Reference/paginate_links
 	global $wp_query;
-	$bignum = 999999999;
+
+	$big = 999999999; // need an unlikely integer
 	if ( $wp_query->max_num_pages <= 1 )
 		return;
-	
+
+	$args = array(
+		'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+		'format' => '?paged=%#%',
+		'total' => $wp_query->max_num_pages,
+		'current' => max( 1, get_query_var('paged') ),
+		// 'show_all'     => False,
+		'end_size'     => 1,
+		'mid_size'     => 2,
+		'prev_next'    => True,
+		'prev_text'    => __('« Anterior'),
+		'next_text'    => __('Siguiente »'),
+		'type'         => 'list'
+		// 'add_args'     => False,
+		// 'add_fragment' => '',
+		// 'before_page_number' => '',
+		// 'after_page_number' => ''
+	); 
+
 	echo '<nav class="pagination">';
-	
-		echo paginate_links( array(
-			'base' 			=> str_replace( $bignum, '%#%', esc_url( get_pagenum_link($bignum) ) ),
-			'format' 		=> '',
-			'current' 		=> max( 1, get_query_var('paged') ),
-			'total' 		=> $wp_query->max_num_pages,
-			'prev_text' 	=> '&larr;',
-			'next_text' 	=> '&rarr;',
-			'type'			=> 'list',
-			'end_size'		=> 3,
-			'mid_size'		=> 3
-		) );
-	
+		echo paginate_links($args);
 	echo '</nav>';
-} /* end page navi */
+}
 
 /*********************
 RANDOM CLEANUP ITEMS

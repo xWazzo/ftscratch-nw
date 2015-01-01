@@ -1,129 +1,216 @@
 <?php
-/* Bones Custom Post Type Example
-This page walks you through creating 
-a custom post type and taxonomies. You
-can edit this one or copy the following code 
-to create another one. 
+//DOCS: http://codex.wordpress.org/Function_Reference/register_post_type
+//Example: https://gist.github.com/justintadlock/6552000
 
-I put this in a separate file so as to 
-keep it organized. I find it easier to edit
-and change things if they are concentrated
-in their own file.
+	/* Register custom post types on the 'init' hook. */
+	add_action( 'init', 'terrenos_post_type');
 
-Developed by: Eddie Machado
-URL: http://themble.com/bones/
-*/
+	function terrenos_post_type(){
+		/* Array for labels */
+		$labels = array(
+			/*
+			* General name for the post type, usually plural. The same as, and overridden by $post_type_object->label
+			*/
+			'name'=> 						'Terrenos', // Capitalize for better reading
+			/*
+			* Name for one object of this post type. Defaults to value of 'name'.
+			*/
+			'singular_name'=> 				'terreno', 
+			/*
+			* The menu name text. This string is the name to give menu items. Defaults to value of 'name'.
+			*/
+			'menu_name'=> 					'Terrenos', // Capitalize  for better reading
+			/*
+			* Name given for the "Add New" dropdown on admin bar. Defaults to 'singular_name' if it exists, 'name' otherwise.
+			*/
+			'name_admin_bar'=> 				'Agregar Terreno', // Capitalize  for better reading
+			/*
+			* The all items text used in the menu. Default is the value of 'name'.
+			*/
+			'all_items'=> 					'Todos los Terrenos', // Capitalize  for better reading
+			/*
+			* The add new text. The default is "Add New" for both hierarchical and non-hierarchical post types. When internationalizing this string, please use a gettext context matching your post type. Example: _x('Add New', 'product');
+			*/
+			'add_new'=> 					'Agregar Terreno', // Capitalize  for better reading
+			/*
+			* The add new item text. Default is Add New Post/Add New Page
+			*/
+			'add_new_item'=> 				'Agregar Nuevo Terreno', // Capitalize  for better reading
+			/*
+			* The edit item text. In the UI, this label is used as the main header on the post's editing panel. Default is "Edit Post" for non-hierarchical and "Edit Page" for hierarchical post types.
+			*/
+			'edit_item'=> 					'Editar Terreno', // Capitalize  for better reading
+			/*
+			* The new item text. Default is "New Post" for non-hierarchical and "New Page" for hierarchical post types.
+			*/
+			'new_item'=> 					'Nuevo Terreno', // Capitalize  for better reading
+			/*
+			* The view item text. Default is View Post/View Page
+			*/
+			'view_item'=> 					'Ver Terreno', // Capitalize  for better reading
+			/*
+			* The search items text. Default is Search Posts/Search Pages
+			*/
+			'search_items'=> 				'Encontrar Terreno', // Capitalize  for better reading
+			/*
+			* The not found text. Default is No posts found/No pages found
+			*/
+			'not_found'=> 					'No se encontró información de ningún terreno.', 
+			/*
+			* The not found in trash text. Default is No posts found in Trash/No pages found in Trash.
+			*/
+			'not_found_in_trash'=> 			'No hay información de terrenos en la basura.' 
+			/*
+			* The parent text. This string is used only in hierarchical post types. Default is "Parent Page".
+			*/
+			// 'parent_item_colon'=> 		''
+		);
+		
+		/* Set up the arguments for the post type. */
+		$args = array(
+			/*
+			* (string) (optional) A plural descriptive name for the post type marked for translation.
+			*/
+			'label' =>						'terrenos',
+			/*
+			* (array) (optional) labels - An array of labels for this post type. By default, post labels are used for non-hierarchical post types and page labels for hierarchical ones.
+			*/
+			'labels'=>						$labels,
+			/*
+			* (string) (optional) A short descriptive summary of what the post type is.
+			*/
+			'description' =>				'Descubre la información de todos los terrenos registrados en el sistema.',
+			/*
+			* Controls how the type is visible to authors (show_in_nav_menus, show_ui) and readers (exclude_from_search, publicly_queryable).
+			*/
+			'public' =>						true,
+			/*
+			* (boolean) (importance) Whether to exclude posts with this post type from front end search results.
+			*/
+			'exclude_from_search' =>		false,
+			/*
+			* (boolean) (optional) Whether queries can be performed on the front end as part of parse_request().
+			*/
+			'publicly_query able'=>			true,
+			/*
+			* (boolean) (optional) Whether to generate a default UI for managing this post type in the admin.
+			*/
+			'show_ui' =>					true,
+			/*
+			* (boolean) (optional) Whether post_type is available for selection in navigation menus.
+			*/
+			// 'show_in_nav_menus' =>			true,
+			/*
+			* (boolean or string) (optional) Where to show the post type in the admin menu. show_ui must be true.
+			*/
+			// 'show_in_menu' =>				true, 
+			/*
+			* The position in the menu order the post type should appear. show_in_menu must be true.
+			*/
+			// 'show_in_admin_bar' =>			'',
+			/*
+			* (optional) The position in the menu order the post type should appear. show_in_menu must be true.
+			*/
+			'menu_position' =>				8,
+			/*
+			* The url to the icon to be used for this menu or the name of the icon from the iconfont. Ex: 'get_template_directory_uri() . "images/cutom-posttype-icon.png"' (Use a image located in the current theme)
+			*/
+			'menu_icon' =>					get_template_directory_uri()."/lib/ftscratch-support/img/custom-post-icon.png",
+			/*
+			* (string or array) (optional) The string to use to build the read, edit, and delete capabilities. 
+				May be passed as an array to allow for alternative plurals when using this argument as a base to construct the capabilities, 
+				e.g. array('story', 'stories') the first array element will be used for the singular capabilities and the second array element 
+				for the plural capabilities, this is instead of the auto generated version if no array is given which would be "storys". 
+				The 'capability_type' parameter is used as a base to construct capabilities unless they are explicitly set with the 'capabilities' parameter. 
+				It seems that `map_meta_cap` needs to be set to true, to make this work.
 
-// Flush rewrite rules for custom post types
-add_action( 'after_switch_theme', 'bones_flush_rewrite_rules' );
+				Default: "post"
 
-// Flush your rewrite rules
-function bones_flush_rewrite_rules() {
-	flush_rewrite_rules();
-}
+				Some of the capability types that can be used (probably not exhaustive list):
+				post (default)
+				page
 
-// let's create the function for the custom type
-function custom_post_example() { 
-	// creating (registering) the custom type 
-	register_post_type( 'custom_type', /* (http://codex.wordpress.org/Function_Reference/register_post_type) */
-		// let's now add all the options for this post type
-		array( 'labels' => array(
-			'name' => __( 'Custom Types', 'bonestheme' ), /* This is the Title of the Group */
-			'singular_name' => __( 'Custom Post', 'bonestheme' ), /* This is the individual type */
-			'all_items' => __( 'All Custom Posts', 'bonestheme' ), /* the all items menu item */
-			'add_new' => __( 'Add New', 'bonestheme' ), /* The add new menu item */
-			'add_new_item' => __( 'Add New Custom Type', 'bonestheme' ), /* Add New Display Title */
-			'edit' => __( 'Edit', 'bonestheme' ), /* Edit Dialog */
-			'edit_item' => __( 'Edit Post Types', 'bonestheme' ), /* Edit Display Title */
-			'new_item' => __( 'New Post Type', 'bonestheme' ), /* New Display Title */
-			'view_item' => __( 'View Post Type', 'bonestheme' ), /* View Display Title */
-			'search_items' => __( 'Search Post Type', 'bonestheme' ), /* Search Custom Type Title */ 
-			'not_found' =>  __( 'Nothing found in the Database.', 'bonestheme' ), /* This displays if there are no entries yet */ 
-			'not_found_in_trash' => __( 'Nothing found in Trash', 'bonestheme' ), /* This displays if there is nothing in the trash */
-			'parent_item_colon' => ''
-			), /* end of arrays */
-			'description' => __( 'This is the example custom post type', 'bonestheme' ), /* Custom Type Description */
-			'public' => true,
-			'publicly_queryable' => true,
-			'exclude_from_search' => false,
-			'show_ui' => true,
-			'query_var' => true,
-			'menu_position' => 8, /* this is what order you want it to appear in on the left hand side menu */ 
-			'menu_icon' => get_stylesheet_directory_uri() . '/img/assets/custom-post-icon.png', /* the icon for the custom post type menu */
-			'rewrite'	=> array( 'slug' => 'custom_type', 'with_front' => false ), /* you can specify its url slug */
-			'has_archive' => 'custom_type', /* you can rename the slug here */
-			'capability_type' => 'post',
-			'hierarchical' => false,
-			/* the next one is important, it tells what's enabled in the post editor */
-			'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'trackbacks', 'custom-fields', 'comments', 'revisions', 'sticky')
-		) /* end of options */
-	); /* end of register post type */
-	
-	/* this adds your post categories to your custom post type */
-	register_taxonomy_for_object_type( 'category', 'custom_type' );
-	/* this adds your post tags to your custom post type */
-	register_taxonomy_for_object_type( 'post_tag', 'custom_type' );
-	
-}
+				These built-in types cannot be used:
+				attachment
+				mediapage
+			*/
+			'capability_type' =>			'post',
+			/*
+			* (optional) An array of the capabilities for this post type.
+			*/
+			// 'capabilities' =>			'',
+			/*
+			* (optional) Whether to use the internal default meta capability handling.
+			*/
+			// 'map_meta_cap' =>			'',
+			/*
+			* (optional) Whether the post type is hierarchical (e.g. page). Allows Parent to be specified. The 'supports' parameter should contain 'page-attributes' to show the parent select box on the editor page.
+			*/
+			'hierarchical' =>				true,
+			/*
+			* (array/boolean) (optional) An alias for calling add_post_type_support() directly. As of 3.5, boolean false can be passed as value instead of an array to prevent default (title and editor) behavior.
+			*/
+			'supports' =>					array(
+												'title',
+												'editor',
+												'author',
+												'thumbnail',
+												'excerpt',
+												'trackbacks',
+												'custom-fields',
+												'comments',
+												'revisions',
+												'page-attributes', //(menu order, hierarchical must be true to show Parent option)
+												'post-formats' //add post formats, see Post Formats
+											),
+			/*
+			* (callback ) (optional) Provide a callback function that will be called when setting up the meta boxes for the edit form. The callback function takes one argument $post, which contains the WP_Post object for the currently edited post. Do remove_meta_box() and add_meta_box() calls in the callback.
+			*/
+			// 'register_meta_box_cb'=>		,
+			/*
+			* (array) (optional) An array of registered taxonomies like category or post_tag that will be used with this post type. This can be used in lieu of calling register_taxonomy_for_object_type() directly. Custom taxonomies still need to be registered with register_taxonomy().
+			*/
+			// 'taxonomies' =>				,
+			/*
+			* (boolean or string) (optional) Enables post type archives. Will use $post_type as archive slug by default.
+			*/
+			'has_archive' =>				'terrenos',
+			/*
+			* (string) (optional) The default rewrite endpoint bitmasks. For more info see Trac Ticket 12605 and this Make WordPress Plugins summary of endpoints.
+			*/
+			// 'permalink_epmask' =>		'',
+			/*
+			* (boolean or array) (optional) Triggers the handling of rewrites for this post type. To prevent rewrites, set to false.
+			*/
+			'rewrite' =>					array( 
+												'slug' => 'terrenos', 
+												'with_front' => false 
+											),
+			/*
+			* (boolean or string) (optional) Sets the query_var key for this post type.
+			*/
+			'query_var' =>					true // Default: true - set to $post_type
+			/*
+			* (boolean) (optional) Can this post_type be exported.
+			*/
+			// 'can_export' =>				'',	
+			/*
+			* (boolean) (not for general use) Whether this post type is a native or "built-in" post_type. Note: this Codex entry is for documentation - core developers recommend you don't use this when registering your own post type
+			*/
+			// '_builtin' =>				'',	
+			/*
+			* (boolean) (not for general use) Link to edit an entry with this post type. Note: this Codex entry is for documentation - core developers recommend you don't use this when registering your own post type
+			*/
+			// '_edit_link' =>				'',
 
-	// adding the function to the Wordpress init
-	add_action( 'init', 'custom_post_example');
-	
-	/*
-	for more information on taxonomies, go here:
-	http://codex.wordpress.org/Function_Reference/register_taxonomy
-	*/
-	
-	// now let's add custom categories (these act like categories)
-	register_taxonomy( 'custom_cat', 
-		array('custom_type'), /* if you change the name of register_post_type( 'custom_type', then you have to change this */
-		array('hierarchical' => true,     /* if this is true, it acts like categories */
-			'labels' => array(
-				'name' => __( 'Custom Categories', 'bonestheme' ), /* name of the custom taxonomy */
-				'singular_name' => __( 'Custom Category', 'bonestheme' ), /* single taxonomy name */
-				'search_items' =>  __( 'Search Custom Categories', 'bonestheme' ), /* search title for taxomony */
-				'all_items' => __( 'All Custom Categories', 'bonestheme' ), /* all title for taxonomies */
-				'parent_item' => __( 'Parent Custom Category', 'bonestheme' ), /* parent title for taxonomy */
-				'parent_item_colon' => __( 'Parent Custom Category:', 'bonestheme' ), /* parent taxonomy title */
-				'edit_item' => __( 'Edit Custom Category', 'bonestheme' ), /* edit custom taxonomy title */
-				'update_item' => __( 'Update Custom Category', 'bonestheme' ), /* update title for taxonomy */
-				'add_new_item' => __( 'Add New Custom Category', 'bonestheme' ), /* add new title for taxonomy */
-				'new_item_name' => __( 'New Custom Category Name', 'bonestheme' ) /* name title for taxonomy */
-			),
-			'show_admin_column' => true, 
-			'show_ui' => true,
-			'query_var' => true,
-			'rewrite' => array( 'slug' => 'custom-slug' ),
-		)
-	);
-	
-	// now let's add custom tags (these act like categories)
-	register_taxonomy( 'custom_tag', 
-		array('custom_type'), /* if you change the name of register_post_type( 'custom_type', then you have to change this */
-		array('hierarchical' => false,    /* if this is false, it acts like tags */
-			'labels' => array(
-				'name' => __( 'Custom Tags', 'bonestheme' ), /* name of the custom taxonomy */
-				'singular_name' => __( 'Custom Tag', 'bonestheme' ), /* single taxonomy name */
-				'search_items' =>  __( 'Search Custom Tags', 'bonestheme' ), /* search title for taxomony */
-				'all_items' => __( 'All Custom Tags', 'bonestheme' ), /* all title for taxonomies */
-				'parent_item' => __( 'Parent Custom Tag', 'bonestheme' ), /* parent title for taxonomy */
-				'parent_item_colon' => __( 'Parent Custom Tag:', 'bonestheme' ), /* parent taxonomy title */
-				'edit_item' => __( 'Edit Custom Tag', 'bonestheme' ), /* edit custom taxonomy title */
-				'update_item' => __( 'Update Custom Tag', 'bonestheme' ), /* update title for taxonomy */
-				'add_new_item' => __( 'Add New Custom Tag', 'bonestheme' ), /* add new title for taxonomy */
-				'new_item_name' => __( 'New Custom Tag Name', 'bonestheme' ) /* name title for taxonomy */
-			),
-			'show_admin_column' => true,
-			'show_ui' => true,
-			'query_var' => true,
-		)
-	);
-	
-	/*
-		looking for custom meta boxes?
-		check out this fantastic tool:
-		https://github.com/jaredatch/Custom-Metaboxes-and-Fields-for-WordPress
-	*/
-	
+		);
+		
+		register_post_type( 'terrenos', $args );
+	}
+
+	function my_rewrite_flush() {
+	    flush_rewrite_rules();
+	}
+	add_action( 'after_switch_theme', 'my_rewrite_flush' );
 
 ?>

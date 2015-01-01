@@ -1,29 +1,38 @@
 <?php get_header(); ?>
 
-		<?php if (have_posts()) : ?> 
+	<?php if (have_posts()) : ?> 
+		<?php while (have_posts()) : the_post(); ?>
 
-			<?php while (have_posts()) : the_post(); ?>
+			<article>
+				<header>
+					<h3><?php the_title(); ?></a></h3>
+				</header>
 
-				<article>
-					<header>
-						<h1><?php the_title(); ?></h1>
-					</header>
+				<section>
+						<?php the_excerpt( '<span class="read-more">' . __( 'Read more &raquo;', 'NuevaWeb' ) . '</span>' ); ?>
+				</section>
 
-					<?php the_content(); ?>
+				<footer></footer>
+			</article>
+		<?php endwhile; ?>
 
-					<footer>
-						<p><?php the_tags( '<span class="tags">' . __( 'Tags:', 'bonestheme' ) . '</span> ', ', ', '' ); ?></p>
-					</footer>
+		<?php if (function_exists('nw_paginate_links')) { ?>
+				<?php nw_paginate_links(); ?>
+		<?php } else { ?>
+				<nav class="wp-prev-next">
+						<ul class="clearfix">
+							<li class="prev-link"><?php next_posts_link( __( '&laquo; Older Entries', 'NuevaWeb' )) ?></li>
+							<li class="next-link"><?php previous_posts_link( __( 'Newer Entries &raquo;', 'NuevaWeb' )) ?></li>
+						</ul>
+				</nav>
+		<?php } ?>
 
-					<?php comments_template(); ?>
-				</article>
+	<?php else : ?>
 
-			<?php endwhile;?>
+		<?php // A 404 answer goes here ?>
 
-		<?php else: ?>
-			<?php // there is no data ?>
-		<?php endif; ?>
+	<?php endif; ?>
 
-		<?php get_sidebar(); ?>
+	<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>

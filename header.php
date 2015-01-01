@@ -61,7 +61,6 @@
 			    </div>
 
 				<nav id="main-nav" class="collapse navbar-collapse">
-					<?php //nw_main_nav(); ?>
 					<ul class="nav navbar-nav">
 						<li><a href="#">Inicio</a></li>
 						<li><a href="#">Nosotros</a></li>

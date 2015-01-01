@@ -1,0 +1,161 @@
+//	Import all your stuff here
+// ------------------------------------
+
+@import "under-construction.css"; // REMOVE THIS when you start your css. 
+@import "wordpress.css";
+@import "../lib/font-awesome-4.2.0/css/font-awesome.min.css"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
+
+// Bootstrap resources. 
+// Default: There are only activated the main .less archives to make it work.
+@import "bootstrap.less"; // Bootstrap Docs: http://getbootstrap.com/
+
+// Bootstrap Disabling responsiveness Docs: http://getbootstrap.com/getting-started/#disable-responsive
+// .container{ width: 970px !important; } .container-fluid{ min-width: 970px !important; }
+
+//	Fix any path's of your libs Here
+// ------------------------------------
+
+// @fa-font-path:        "../lib/font-awesome-4.2.0/fonts/"; // Font-Awesome Icon Path Fix
+@icon-font-path:          "../lib/bootstrap-3.3.1/fonts/"; // Bootstrap Icon Path Fix
+
+//	My Fonts Here
+// ------------------------------------
+// Learn how to use @font-face - Docs: http://nicewebtype.com/notes/2009/10/30/how-to-use-css-font-face/
+
+// @font-face{
+	// font-family: ; // 'family name' 
+	// font-style: ; // normal, italic, oblique 
+	// font-weight: ; // 100 (This is light), 400 (This is normal), 900 (This is bold). 
+	// src: url("fonts/");
+// }
+
+// @primaryFontFamily: @CustomFontFamilyFontFamily;
+// @secondaryFontFamily: @SecondCustomFontFamily;
+//
+// @CustomFontFamilyFontFamily: "Your-Sanserif Font Family", Arial, sans-serif;
+// @SecondCustomFontFamily: Georgia, "Your-Serif FontFamily", Times, serif;
+
+
+
+//	Variables
+// ------------------------------------
+
+@black:						#000;
+@white:						#fff;
+
+
+// ====================================
+//	General Selectors
+// ====================================
+
+body{ font-size: 14px; color: @black; }
+
+h1, h2, h3, h4, h5, h6{}
+
+img{ vertical-align: top; } // Remove 2 pixels under the image
+
+ol, ul, dl{}
+
+li{}
+
+p{}
+
+a{}
+
+blockquote{}
+
+// General Clases
+// ====================================
+
+.none{ display: none; }
+.relative{ position: relative; }
+.absolute{ position: absolute; }
+.fixed{ position: fixed; }
+
+.t-left{ text-align: left; }
+.t-right{ text-align: right; }
+.t-center{ text-align: center; }
+
+
+// Wordpress Gallery
+// ====================================
+
+.gallery-item{
+	padding: 0 10px;
+
+	img{
+		width: 100%;
+		height: auto;
+	}
+}
+
+
+.wp-caption{
+
+	a{ display: block; }
+
+	img{ }
+}
+
+.wp-caption p.wp-caption-text, .wp-caption-text{
+	font-weight: 400;
+	font-size: 1.2em;
+	line-height: 1em;
+	padding: 15px 0 10px;
+}
+
+.gallery-columns-3{
+	.gallery-item{ width: 33.3% !important; }
+}
+
+
+// Header // Your Main Header Css goes here.
+// ====================================
+
+// #main-header{ }
+
+// @import "dropdown_menu.less"; // Use this Dropdown Menu to save time
+
+
+// Carousel
+// ====================================
+
+.carousel-slide{
+	height: 460px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.carousel-control{ cursor: pointer; }
+
+
+// (Section Name)
+// ====================================
+
+
+
+
+
+// Footer // Your Main Footer Css goes here.
+// ====================================
+
+// #main-footer{ }
+
+
+
+//	Components
+// ====================================
+
+#searchform{
+
+	// Input Placeholder color
+	::-webkit-input-placeholder{ color: darken(@white, 30%);}
+	:-moz-placeholder{ color: darken(@white, 30%);}
+	::-moz-placeholder{ color: darken(@white, 30%);}
+	:-ms-input-placeholder { color: darken(@white, 30%);}
+}
+
+
+
+
