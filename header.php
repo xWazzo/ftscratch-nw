@@ -56,7 +56,7 @@
 			        <span class="icon-bar"></span>
 			      </button>
 			      <a class="navbar-brand" href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>">
-			      	<h1><?php bloginfo('name'): ?></h1>
+			      	<h1><?php bloginfo('name'); ?></h1>
 			      </a>
 			    </div>
 
@@ -78,10 +78,6 @@
 						</li>
 						<li><a href="#">Blog</a></li>
 					</ul>
-					<div id="utilities-nav" class="hidden-xs">
-						<a href="#" title="Log In">Log In</a>
-						<div id="fullscreen" title="Fullscreen" class="fa fa-expand"></div>
-					</div>
 				</nav>
 
 			</div><!-- /.container-fluid -->
