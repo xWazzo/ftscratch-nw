@@ -156,12 +156,12 @@
 												'author',
 												'thumbnail',
 												'excerpt',
-												'trackbacks',
+												// 'trackbacks',
 												'custom-fields',
-												'comments',
+												// 'comments',
 												'revisions',
-												'page-attributes', //(menu order, hierarchical must be true to show Parent option)
-												'post-formats' //add post formats, see Post Formats
+												'page-attributes' //(menu order, hierarchical must be true to show Parent option)
+												// 'post-formats' //add post formats, see Post Formats
 											),
 			/*
 			* (callback ) (optional) Provide a callback function that will be called when setting up the meta boxes for the edit form. The callback function takes one argument $post, which contains the WP_Post object for the currently edited post. Do remove_meta_box() and add_meta_box() calls in the callback.
@@ -170,7 +170,10 @@
 			/*
 			* (array) (optional) An array of registered taxonomies like category or post_tag that will be used with this post type. This can be used in lieu of calling register_taxonomy_for_object_type() directly. Custom taxonomies still need to be registered with register_taxonomy().
 			*/
-			// 'taxonomies' =>				,
+			// 'taxonomies' =>					array(
+			// 									'category',
+			// 									'post_tag'
+			// 								),
 			/*
 			* (boolean or string) (optional) Enables post type archives. Will use $post_type as archive slug by default.
 			*/
@@ -212,5 +215,10 @@
 	    flush_rewrite_rules();
 	}
 	add_action( 'after_switch_theme', 'my_rewrite_flush' );
+
+
+	// Need custom categories or custom tags?
+	// Use register_taxonomy
+	// DOCS: http://codex.wordpress.org/Function_Reference/register_taxonomy
 
 ?>

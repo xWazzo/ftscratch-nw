@@ -15,13 +15,13 @@ sidebars, comments, ect.
 
 require_once( 'lib/ftscratch-support/admin.php' );
 
-// require_once( 'lib/ftscratch-support/theme_support.php' );
+require_once( 'lib/ftscratch-support/theme_support.php' );
 
 
 /*
 Create your own Post Type:
 */
-// require_once( 'lib/ftscratch-support/custom-post-type.php' ); // you can disable this if you like
+require_once( 'lib/ftscratch-support/custom-post-type.php' ); // you can disable this if you like
 
 /************* THUMBNAIL SIZE OPTIONS *************/
 
