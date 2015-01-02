@@ -2,64 +2,70 @@
 //DOCS: http://codex.wordpress.org/Function_Reference/register_post_type
 //Example: https://gist.github.com/justintadlock/6552000
 
-	/* Register custom post types on the 'init' hook. */
-	add_action( 'init', 'terrenos_post_type');
+// ************************************************************
+// Change every "custom" text to whatever you want
+// Don't forget to capitalize when needed
+// ************************************************************
 
-	function terrenos_post_type(){
+	/* Register custom post types on the 'init' hook. */
+	add_action( 'init', 'custom_post_type');
+
+	function custom_post_type(){
 		/* Array for labels */
+
 		$labels = array(
 			/*
 			* General name for the post type, usually plural. The same as, and overridden by $post_type_object->label
 			*/
-			'name'=> 						'Terrenos', // Capitalize for better reading
+			'name'=> 						'Custom', // Capitalize for better reading
 			/*
 			* Name for one object of this post type. Defaults to value of 'name'.
 			*/
-			'singular_name'=> 				'terreno', 
+			'singular_name'=> 				'custom', 
 			/*
 			* The menu name text. This string is the name to give menu items. Defaults to value of 'name'.
 			*/
-			'menu_name'=> 					'Terrenos', // Capitalize  for better reading
+			'menu_name'=> 					'Custom', // Capitalize  for better reading
 			/*
 			* Name given for the "Add New" dropdown on admin bar. Defaults to 'singular_name' if it exists, 'name' otherwise.
 			*/
-			'name_admin_bar'=> 				'Agregar Terreno', // Capitalize  for better reading
+			'name_admin_bar'=> 				'Agregar Custom', // Capitalize  for better reading
 			/*
 			* The all items text used in the menu. Default is the value of 'name'.
 			*/
-			'all_items'=> 					'Todos los Terrenos', // Capitalize  for better reading
+			'all_items'=> 					'Todos los Custom', // Capitalize  for better reading
 			/*
 			* The add new text. The default is "Add New" for both hierarchical and non-hierarchical post types. When internationalizing this string, please use a gettext context matching your post type. Example: _x('Add New', 'product');
 			*/
-			'add_new'=> 					'Agregar Terreno', // Capitalize  for better reading
+			'add_new'=> 					'Agregar Custom', // Capitalize  for better reading
 			/*
 			* The add new item text. Default is Add New Post/Add New Page
 			*/
-			'add_new_item'=> 				'Agregar Nuevo Terreno', // Capitalize  for better reading
+			'add_new_item'=> 				'Agregar Nuevo Custom', // Capitalize  for better reading
 			/*
 			* The edit item text. In the UI, this label is used as the main header on the post's editing panel. Default is "Edit Post" for non-hierarchical and "Edit Page" for hierarchical post types.
 			*/
-			'edit_item'=> 					'Editar Terreno', // Capitalize  for better reading
+			'edit_item'=> 					'Editar Custom', // Capitalize  for better reading
 			/*
 			* The new item text. Default is "New Post" for non-hierarchical and "New Page" for hierarchical post types.
 			*/
-			'new_item'=> 					'Nuevo Terreno', // Capitalize  for better reading
+			'new_item'=> 					'Nuevo Custom', // Capitalize  for better reading
 			/*
 			* The view item text. Default is View Post/View Page
 			*/
-			'view_item'=> 					'Ver Terreno', // Capitalize  for better reading
+			'view_item'=> 					'Ver Custom', // Capitalize  for better reading
 			/*
 			* The search items text. Default is Search Posts/Search Pages
 			*/
-			'search_items'=> 				'Encontrar Terreno', // Capitalize  for better reading
+			'search_items'=> 				'Encontrar Custom', // Capitalize  for better reading
 			/*
 			* The not found text. Default is No posts found/No pages found
 			*/
-			'not_found'=> 					'No se encontró información de ningún terreno.', 
+			'not_found'=> 					'No se encontró información de ningún custom.', 
 			/*
 			* The not found in trash text. Default is No posts found in Trash/No pages found in Trash.
 			*/
-			'not_found_in_trash'=> 			'No hay información de terrenos en la basura.' 
+			'not_found_in_trash'=> 			'No hay información de custom en la basura.' 
 			/*
 			* The parent text. This string is used only in hierarchical post types. Default is "Parent Page".
 			*/
@@ -71,7 +77,7 @@
 			/*
 			* (string) (optional) A plural descriptive name for the post type marked for translation.
 			*/
-			'label' =>						'terrenos',
+			'label' =>						'custom',
 			/*
 			* (array) (optional) labels - An array of labels for this post type. By default, post labels are used for non-hierarchical post types and page labels for hierarchical ones.
 			*/
@@ -79,7 +85,7 @@
 			/*
 			* (string) (optional) A short descriptive summary of what the post type is.
 			*/
-			'description' =>				'Descubre la información de todos los terrenos registrados en el sistema.',
+			'description' =>				'Descubre la información de todos los custom registrados en el sistema.',
 			/*
 			* Controls how the type is visible to authors (show_in_nav_menus, show_ui) and readers (exclude_from_search, publicly_queryable).
 			*/
@@ -177,7 +183,7 @@
 			/*
 			* (boolean or string) (optional) Enables post type archives. Will use $post_type as archive slug by default.
 			*/
-			'has_archive' =>				'terrenos',
+			'has_archive' =>				'custom',
 			/*
 			* (string) (optional) The default rewrite endpoint bitmasks. For more info see Trac Ticket 12605 and this Make WordPress Plugins summary of endpoints.
 			*/
@@ -186,7 +192,7 @@
 			* (boolean or array) (optional) Triggers the handling of rewrites for this post type. To prevent rewrites, set to false.
 			*/
 			'rewrite' =>					array( 
-												'slug' => 'terrenos', 
+												'slug' => 'custom', 
 												'with_front' => false 
 											),
 			/*
@@ -208,7 +214,7 @@
 
 		);
 		
-		register_post_type( 'terrenos', $args );
+		register_post_type( 'custom', $args );
 	}
 
 	function my_rewrite_flush() {
