@@ -1,108 +1,63 @@
 <?php get_header(); ?>
 
-			<div id="content">
-
-				<div id="inner-content" class="wrap clearfix">
-
-						<div id="main" class="eightcol first clearfix" role="main">
-
-							<?php if (is_category()) { ?>
-								<h1 class="archive-title h2">
-									<span><?php _e( 'Posts Categorized:', 'bonestheme' ); ?></span> <?php single_cat_title(); ?>
-								</h1>
-
-							<?php } elseif (is_tag()) { ?>
-								<h1 class="archive-title h2">
-									<span><?php _e( 'Posts Tagged:', 'bonestheme' ); ?></span> <?php single_tag_title(); ?>
-								</h1>
-
-							<?php } elseif (is_author()) {
-								global $post;
-								$author_id = $post->post_author;
-							?>
-								<h1 class="archive-title h2">
-
-									<span><?php _e( 'Posts By:', 'bonestheme' ); ?></span> <?php the_author_meta('display_name', $author_id); ?>
-
-								</h1>
-							<?php } elseif (is_day()) { ?>
-								<h1 class="archive-title h2">
-									<span><?php _e( 'Daily Archives:', 'bonestheme' ); ?></span> <?php the_time('l, F j, Y'); ?>
-								</h1>
-
-							<?php } elseif (is_month()) { ?>
-									<h1 class="archive-title h2">
-										<span><?php _e( 'Monthly Archives:', 'bonestheme' ); ?></span> <?php the_time('F Y'); ?>
-									</h1>
-
-							<?php } elseif (is_year()) { ?>
-									<h1 class="archive-title h2">
-										<span><?php _e( 'Yearly Archives:', 'bonestheme' ); ?></span> <?php the_time('Y'); ?>
-									</h1>
+		<div id="main-content" role="main">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<h1>
+							<?php if (is_category()) { ?> <span><?php _e( 'Categoría:', 'NuevaWeb' ); ?></span> <?php single_cat_title(); ?>
+							<?php } elseif (is_tag()) { ?> <span><?php _e( 'Tag:', 'NuevaWeb' ); ?></span> <?php single_tag_title(); ?>
+							<?php } elseif (is_author()) { global $post; $author_id = $post->post_author; ?><span><?php _e( 'Publicado por:', 'NuevaWeb' ); ?></span> <?php the_author_meta('display_name', $author_id); ?>
+							<?php } elseif (is_day()) { ?><span><?php _e( 'Archivos por día:', 'NuevaWeb' ); ?></span> <?php the_time('l, F j, Y'); ?>
+							<?php } elseif (is_month()) { ?><span><?php _e( 'Archivos por mes:', 'NuevaWeb' ); ?></span> <?php the_time('F Y'); ?>
+							<?php } elseif (is_year()) { ?><span><?php _e( 'Archivos por año:', 'NuevaWeb' ); ?></span> <?php the_time('Y'); ?>
 							<?php } ?>
+						</h1>
 
-							<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+						<?php if (have_posts()) : ?> 
+							<?php while (have_posts()) : the_post(); ?>
 
-							<article id="post-<?php the_ID(); ?>" <?php post_class( 'clearfix' ); ?> role="article">
+								<article role="article">
+									<div class="row">
+										<?php if(has_post_thumbnail()): ?>
+											<div class="col-sm-4">
+												<?php the_post_thumbnail( 'medium' ); ?>
+											</div>
+										<?php endif; ?>
+										<div class="<?php has_post_thumbnail() ? 'col-sm-8':'col-sm-12' ?>">
+											<header>
+												<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+											</header>
+											<?php the_excerpt(); ?>
 
-								<header class="article-header">
+											<?php if(function_exists( 'nw_tags' ) && nw_tags()): ?>
+												<footer class="tags">
+													<p>Tags: <?php echo nw_tags(); ?></p>
+												</footer>
+											<?php endif; ?>
+										</div><!-- /.col-sm-8 -->
+									</div>
 
-									<h3 class="h2"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
-									<p class="byline vcard"><?php
-										printf(__( 'Posted <time class="updated" datetime="%1$s" pubdate>%2$s</time> by <span class="author">%3$s</span> <span class="amp">&</span> filed under %4$s.', 'bonestheme' ), get_the_time('Y-m-j'), get_the_time(__( 'F jS, Y', 'bonestheme' )), bones_get_the_author_posts_link(), get_the_category_list(', '));
-									?></p>
-
-								</header>
-
-								<section class="entry-content clearfix">
-
-									<?php the_post_thumbnail( 'bones-thumb-300' ); ?>
-
-									<?php the_excerpt(); ?>
-
-								</section>
-
-								<footer class="article-footer">
-
-								</footer>
-
-							</article>
-
+								</article>
 							<?php endwhile; ?>
 
-									<?php if ( function_exists( 'bones_page_navi' ) ) { ?>
-										<?php bones_page_navi(); ?>
-									<?php } else { ?>
-										<nav class="wp-prev-next">
-											<ul class="clearfix">
-												<li class="prev-link"><?php next_posts_link( __( '&laquo; Older Entries', 'bonestheme' )) ?></li>
-												<li class="next-link"><?php previous_posts_link( __( 'Newer Entries &raquo;', 'bonestheme' )) ?></li>
-											</ul>
-										</nav>
-									<?php } ?>
+							<?php if ( function_exists( 'nw_paginate_links' ) ) { ?>
+								<?php nw_paginate_links(); ?>
+							<?php } else { ?>
+								<nav class="wp-prev-next">
+									<ul class="clearfix">
+										<li class="prev-link"><?php next_posts_link( __( '&laquo; Older Entries', 'NuevaWeb' )) ?></li>
+										<li class="next-link"><?php previous_posts_link( __( 'Newer Entries &raquo;', 'NuevaWeb' )) ?></li>
+									</ul>
+								</nav>
+							<?php } ?>
 
-							<?php else : ?>
-
-									<article id="post-not-found" class="hentry clearfix">
-										<header class="article-header">
-											<h1><?php _e( 'Oops, Post Not Found!', 'bonestheme' ); ?></h1>
-										</header>
-										<section class="entry-content">
-											<p><?php _e( 'Uh Oh. Something is missing. Try double checking things.', 'bonestheme' ); ?></p>
-										</section>
-										<footer class="article-footer">
-												<p><?php _e( 'This is the error message in the archive.php template.', 'bonestheme' ); ?></p>
-										</footer>
-									</article>
-
-							<?php endif; ?>
-
-						</div>
-
-						<?php get_sidebar(); ?>
-
-								</div>
-
-			</div>
+						<?php else : ?>
+							<p>No se encontró nada.</p>
+						<?php endif; ?>
+					</div><!-- /.col-sm-10 col-sm-offset-1 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</div><!-- #main-content -->
 
 <?php get_footer(); ?>

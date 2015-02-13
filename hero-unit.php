@@ -1,5 +1,5 @@
 <?php $args_carousel = array(
-	'category_name' => 'carousel',
+	'post_type' => 'hero-unit',
 	'posts_per_page' => 4,
 	'orderby' => 'menu_order',
 	'order' => 'ASC'
@@ -17,11 +17,7 @@
 	  <ol class="carousel-indicators">
 	  	<?php $i=0; ?>
 		<?php while( $carousel_query->have_posts() ) : $carousel_query->the_post(); ?>
-			<?php if( $i==0 ): ?>			
-			    <li data-target="#main-carousel" data-slide-to="<?php echo $i; ?>" class="active"></li>
-			<?php else: ?>
-			    <li data-target="#main-carousel" data-slide-to="<?php echo $i; ?>"></li>
-			<?php endif; ?>
+			<li data-target="#main-carousel" data-slide-to="<?php echo $i; ?>"<?php echo $i==0 ? ' class="active"':''; ?>></li>
 		<?php $i++; endwhile; ?>
 	  </ol>
 	<?php endif; ?>
@@ -29,7 +25,7 @@
 	<div class="carousel-inner">
 	  	<?php $i=0; ?>
 	  	<?php while( $carousel_query->have_posts() ) : $carousel_query->the_post(); ?>
-	  		<?php $url = get_post_custom_values('[URL]'); ?>
+	  		<?php $url = get_post_custom_values('URL'); ?>
 	  		<?php $thumb_img_src = wp_get_attachment_image_src( get_post_thumbnail_id(), 'slide-1920-460'); // Get the post thumbnail img src ?>
 			<?php $thumb_url_src = $thumb_img_src[0]; // set the thumbnail src url, to use it as a background ?>
 

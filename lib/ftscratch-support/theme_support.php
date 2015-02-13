@@ -257,7 +257,7 @@ function nw_main_nav(){
 		'theme_location' => 'main-nav',
 		'menu'            => 'main-nav', // The menu that is desired; accepts (matching in order) id, slug, name
 		'container'       => 'nav',
-		'container_class' => 'main-nav-container collapse navbar-<zcollapse', // Bootstrap collapse needed classes
+		'container_class' => 'main-nav-container collapse navbar-collapse', // Bootstrap collapse needed classes
 		'container_id'    => 'main-nav',
 		'menu_class'      => 'nav navbar-nav', // Bootstrap collapse needed classes
 		'menu_id'         => 'main-nav-menu',

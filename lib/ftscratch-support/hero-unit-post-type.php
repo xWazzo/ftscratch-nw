@@ -8,14 +8,14 @@
 // ************************************************************
 
 	/* Register custom post types on the 'init' hook. */
-	add_action( 'init', 'custom_post_type');
+	add_action( 'init', 'hero_unit_post_type');
 
-	function custom_post_type(){
+	function hero_unit_post_type(){
 		/* Array for labels */
 
-		$caps_name_plural = 'Custom';
-		$caps_name_singular = 'Custom';
-		$slug_name = 'custom';
+		$caps_name_plural = 'Hero Unit';
+		$caps_name_singular = 'Slide';
+		$slug_name = 'hero-unit';
 
 		$labels = array(
 			/*
@@ -125,7 +125,7 @@
 			/*
 			* The url to the icon to be used for this menu or the name of the icon from the iconfont. Ex: 'get_template_directory_uri() . "images/cutom-posttype-icon.png"' (Use a image located in the current theme)
 			*/
-			'menu_icon' =>					get_template_directory_uri()."/lib/ftscratch-support/img/custom-post-icon.png",
+			'menu_icon' =>					get_template_directory_uri()."/lib/ftscratch-support/img/hero-unit-post-icon.png",
 			/*
 			* (string or array) (optional) The string to use to build the read, edit, and delete capabilities. 
 				May be passed as an array to allow for alternative plurals when using this argument as a base to construct the capabilities, 
@@ -221,10 +221,10 @@
 		register_post_type( $slug_name, $args );
 	}
 
-	function my_rewrite_flush() {
+	function my_rewrite_flush_hero_unit() {
 	    flush_rewrite_rules();
 	}
-	add_action( 'after_switch_theme', 'my_rewrite_flush' );
+	add_action( 'after_switch_theme', 'my_rewrite_flush_hero_unit' );
 
 
 	// Need custom categories or custom tags?

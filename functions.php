@@ -17,6 +17,8 @@ require_once( 'lib/ftscratch-support/admin.php' );
 
 require_once( 'lib/ftscratch-support/theme_support.php' );
 
+// Hero Unit (hero-unit.php)
+require_once( 'lib/ftscratch-support/hero-unit-post-type.php' ); // you can disable this if you like
 
 /*
 Create your own Post Type:
@@ -58,8 +60,8 @@ add_filter( 'image_size_names_choose', 'bones_custom_image_sizes' );
 function bones_custom_image_sizes( $sizes ) {
     return array_merge( $sizes, array(
         'bg-thumbnail' => __('640px by 480px'),
-    	'md-thumbnail' => __('360px by 270px'),
-    	'sm-thumbnail' => __('203px by 152px'),
+    	// 'md-thumbnail' => __('360px by 270px'),
+    	// 'sm-thumbnail' => __('203px by 152px'),
     ) );
 }
 
@@ -145,6 +147,46 @@ function bones_comments( $comment, $args, $depth ) {
 // Custom Support 
 // ====================================
 
+// -----------------------------------
+// Breadcrumbs function
+// -----------------------------------
+// Return the post ancestors as breadcrumbs
+// Its necesary to echo the function when using it, ex: echo nw_breadcrumbs();
+function nw_breadcrumbs(){
+	$post_ancestors = array_reverse(get_post_ancestors($post->ID));
+	$separator = ' » ';
+	if($post_ancestors):
+		$breadcrumb = '';
+		foreach ($post_ancestors as $ancestor): 
+			$breadcrumb .= '<a href="'.get_permalink($ancestor).'">'.get_post($ancestor)->post_title.'</a>'.$separator;
+		endforeach;
+		$breadcrumb .= '<p>'.get_the_title().'</p>';
+		return trim($breadcrumb, $separator);
+	else:
+		$breadcrumb = FALSE;
+		return $breadcrumb;
+	endif;
+}
+
+// -----------------------------------
+// Post Tags function
+// -----------------------------------
+// Return the post tags
+// Its necesary to echo the function when using it, ex: echo nw_tags();
+function nw_tags(){
+	$posttags = get_the_tags();
+	$separator = ', ';
+	if($posttags):
+		$tag = '';
+		foreach($posttags as $meta_tag):
+			$tag .= '<a href="'.get_tag_link($meta_tag->term_id).'">'.$meta_tag->name .'</a>'.$separator; 
+		endforeach;
+		return trim($tag, $separator);
+	else:
+		$tag = FALSE;
+		return $tag;
+	endif; 
+}
 
 
 // -----------------------------------
@@ -156,6 +198,17 @@ function bones_comments( $comment, $args, $depth ) {
 // function posts_order_wpse_91866() 
 // {
 //     add_post_type_support( 'post', 'page-attributes' );
+// }
+
+// -----------------------------------
+// Add Post attribute to Page.
+// -----------------------------------
+
+// // Exceprt
+// add_action( 'admin_init', 'nw_page_excerpt_init' );
+
+// function nw_page_excerpt_init() {
+//     add_post_type_support( 'page', 'excerpt' );
 // }
 
 

@@ -1,9 +1,25 @@
+/******************************************************************
+Theme Name: FTScratch-Nw (NOMBRE DEL CLIENTE)
+Theme URI: http://www.nuevaweb.com.mx
+Description: Tema diseñado y desarrollado exclusivamente para "(NOMBRE DEL CLIENTE)" por NuevaWeb 2014.
+Author: <a href="http://www.nuevaweb.com.mx">the NuevaWeb team</a>
+Author URI: http://www.nuevaweb.com.mx
+Version: 1.0
+Tags: flexible-width, translation-ready, microformats, rtl-language-support, custom-template, nuevaweb
+
+License: -
+License URI: -
+
+Happy Developing!
+
+******************************************************************/
+
 //	Import all your stuff here
 // ------------------------------------
 
-@import "under-construction.css"; // REMOVE THIS when you start your css. 
-@import "wordpress.css";
-@import "../lib/font-awesome-4.2.0/css/font-awesome.min.css"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
+@import "under-construction.less"; // REMOVE THIS when you start your less. 
+@import "wordpress.less";
+@import "../lib/font-awesome-4.2.0/less/font-awesome.less"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
 
 // Bootstrap resources. 
 // Default: There are only activated the main .less archives to make it work.
@@ -168,5 +184,50 @@ blockquote{}
 }
 
 
+// Media Queries
+// ====================================
 
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) { }// Large devices
 
+/* Midum devices only (desktops, from 992px to 1200px) */
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) { }// Midum devices only
+
+/* Medium devices and up (desktops, 992px and up) */
+@media (min-width: @screen-md-min) { }// Midum devices and up
+
+/* Small devices only (tablets, from 768px to 992px) */
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) { }// Small devices only
+
+/* Small devices and up (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) { }// Small devices and up
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: @screen-xs-max) { 
+	.admin-bar-fix{ margin-top: 0px; }
+	.header-fix-size{ display: none; }
+
+	.navbar-header{ cursor: pointer; }
+	.navbar-brand{ //margin: 0; color: @white; font-weight: 400; 
+	}
+
+	#main-nav{
+		ul{ width: 100%; padding: 0;
+			li{
+				width: 100%;
+				a{
+					display: block;
+					&:hover{ }
+				}
+
+				>ul{
+					min-width: 100%;
+					position: relative;
+					display: block;
+				}
+			}// li
+		}// ul
+	}// #main-nav
+
+	.carousel-slide{ height: 180px; }
+}

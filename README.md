@@ -1,15 +1,18 @@
-+ [Page/Category]
-	+ [Featured Image]
-		• Description where the featured image will be displayed and size of the featured image.
+# [Page/Category/Custom/Single]
+## Featured Image
 
-	+ [Custom Values]
-		• CustomValue - Description for the custom value
+Description where the featured image will be displayed and size of the featured image.
 
-	+ [Excerpt]
-		• Description if necessary.
+## Custom Values
+CustomValue - Description for the custom value
 
-	+ [Dynamic Sidebar]
-		• [Name] Description if necessary
+## Excerpt
+Description if necessary.
 
-	+ [Notes]
-		• Addition notes if necsesary
+## Dynamic Sidebar
+
+> [Name] Description if necessary
+
+## Notes
+
+Addition notes if necsesary

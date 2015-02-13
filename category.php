@@ -17,14 +17,14 @@
 		<?php endwhile; ?>
 
 		<?php if (function_exists('nw_paginate_links')) { ?>
-				<?php nw_paginate_links(); ?>
+			<?php nw_paginate_links(); ?>
 		<?php } else { ?>
-				<nav class="wp-prev-next">
-						<ul class="clearfix">
-							<li class="prev-link"><?php next_posts_link( __( '&laquo; Older Entries', 'NuevaWeb' )) ?></li>
-							<li class="next-link"><?php previous_posts_link( __( 'Newer Entries &raquo;', 'NuevaWeb' )) ?></li>
-						</ul>
-				</nav>
+			<nav class="wp-prev-next">
+				<ul class="clearfix">
+					<li class="prev-link"><?php next_posts_link( __( '&laquo; Older Entries', 'NuevaWeb' )) ?></li>
+					<li class="next-link"><?php previous_posts_link( __( 'Newer Entries &raquo;', 'NuevaWeb' )) ?></li>
+				</ul>
+			</nav>
 		<?php } ?>
 
 	<?php else : ?>

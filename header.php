@@ -56,7 +56,7 @@
 			        <span class="icon-bar"></span>
 			      </button>
 			      <a class="navbar-brand" href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>">
-			      	<h1><?php bloginfo('name'); ?></h1>
+			      	<h1 class="none"><?php bloginfo('name'); ?></h1>
 			      </a>
 			    </div>
 
