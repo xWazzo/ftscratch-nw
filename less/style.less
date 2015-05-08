@@ -19,7 +19,7 @@ Happy Developing!
 
 @import "under-construction.less"; // REMOVE THIS when you start your less. 
 @import "wordpress.less";
-@import "../lib/font-awesome-4.2.0/less/font-awesome.less"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
+@import "../lib/font-awesome-4.3.0/less/font-awesome.less"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
 
 // Bootstrap resources. 
 // Default: There are only activated the main .less archives to make it work.
@@ -31,7 +31,7 @@ Happy Developing!
 //	Fix any path's of your libs Here
 // ------------------------------------
 
-// @fa-font-path:        "../lib/font-awesome-4.2.0/fonts/"; // Font-Awesome Icon Path Fix
+// @fa-font-path:        "../lib/font-awesome-4.3.0/fonts/"; // Font-Awesome Icon Path Fix
 @icon-font-path:          "../lib/bootstrap-3.3.1/fonts/"; // Bootstrap Icon Path Fix
 
 //	My Fonts Here
@@ -204,11 +204,12 @@ blockquote{}
 
 /* Extra small devices (phones, less than 768px) */
 @media (max-width: @screen-xs-max) { 
-	.admin-bar-fix{ margin-top: 0px; }
+	.admin-bar-fix{ margin-top: 0px; }
 	.header-fix-size{ display: none; }
 
-	.navbar-header{ cursor: pointer; }
-	.navbar-brand{ //margin: 0; color: @white; font-weight: 400; 
+	.navbar-header{ cursor: pointer; }
+	.navbar-brand{
+		//margin:0; color: @white; font-weight: 400;
 	}
 
 	#main-nav{

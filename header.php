@@ -12,8 +12,7 @@
 	<meta name="author" content="The NuevaWeb Team">
 	<title><?php bloginfo('name'); ?> | <?php is_home() ? bloginfo('description') : wp_title(''); ?></title>
 
-	<?php //This is my custom stylesheet ?>
-	<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/css/style.css">
+	<?php // Load styles and scripts from functions.php nw_enqueue_scripts() function ?>
 	<?php // icons & favicons ?>
 	<link rel="apple-touch-icon" href="<?php bloginfo('template_url'); ?>/img/assets/apple-icon-touch.png">
 	<link rel="icon" href="<?php bloginfo('template_url'); ?>/img/assets/favicon.png">
@@ -49,40 +48,24 @@
 
 	<header id="main-header">
 		<nav class="navbar" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-			      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
-			        <span class="sr-only">Toggle navigation</span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			      </button>
-			      <a class="navbar-brand" href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>">
-			      	<h1 class="none"><?php bloginfo('name'); ?></h1>
-			      </a>
-			    </div>
+			<div class="container">
+				<div class="row">
+					<div class="navbar-header">
+						<div class="navbar-brand">
+				      		<a class="main-logo" href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>"><h1 class="none"><?php bloginfo('name'); ?></h1></a>
+				      	</div>
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
 
-				<nav id="main-nav" class="collapse navbar-collapse">
-					<ul class="nav navbar-nav">
-						<li><a href="#">Inicio</a></li>
-						<li><a href="#">Nosotros</a></li>
-						<li><a href="#">Proyectos</a>
-							<ul>
-								<li><a href="#">Lorem ipsum</a></li>
-								<li><a href="#">Lorem ipsum</a></li>
-								<li><a href="#">Lorem ipsum</a>
-									<ul>
-										<li><a href="#">Lorem ipsum</a></li>
-										<li><a href="#">Lorem ipsum</a></li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><a href="#">Blog</a></li>
-					</ul>
-				</nav>
+					<?php nw_main_nav(); ?>
+				</div><!-- /.row -->
 
-			</div><!-- /.container-fluid -->
+			</div><!-- /.container -->
 		</nav><!-- /navbar -->
 	</header><!-- /#main-header -->
 
