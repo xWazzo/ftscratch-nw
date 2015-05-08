@@ -17,13 +17,30 @@ require_once( 'lib/ftscratch-support/admin.php' );
 
 require_once( 'lib/ftscratch-support/theme_support.php' );
 
+// =======================================================
+// Style & Javascript Enqueue
+// =======================================================
+
+function nw_enqueue_scripts(){
+	wp_enqueue_style( 'nw_style', get_template_directory_uri(). '/css/style.css' );
+	wp_enqueue_script( 'jquery', get_template_directory_uri(). '/js/jquery-1.11.1.min.js', '1.11.1' , false );
+	// wp_enqueue_script( 'nw-scripts',  get_template_directory_uri(). '/lib/bootstrap-3.3.1/dist/js/bootstrap.min.js', [], '3.3.1', true );
+	// wp_enqueue_script( 'nw-scripts',  get_template_directory_uri(). '/js/scripts.js', [], '4.2', true );
+}
+add_action( 'wp_enqueue_scripts', 'nw_enqueue_scripts');
+
 // Hero Unit (hero-unit.php)
-require_once( 'lib/ftscratch-support/hero-unit-post-type.php' ); // you can disable this if you like
+// require_once( 'lib/ftscratch-support/custom-post-type/hero-unit-post-type.php' ); // you can disable this if you like
 
 /*
 Create your own Post Type:
 */
-// require_once( 'lib/ftscratch-support/custom-post-type.php' ); // you can disable this if you like
+// require_once( 'lib/ftscratch-support/custom-post-type/custom-post-type.php' ); // you can disable this if you like
+
+/*
+Create your own button WordPress Editor Buttons:
+*/
+//require_once('lib/ftscratch-support/nw-shortcodes/wptuts-editor-buttons/wptuts.php'); // you can disable this if you like
 
 /************* THUMBNAIL SIZE OPTIONS *************/
 
@@ -148,24 +165,113 @@ function bones_comments( $comment, $args, $depth ) {
 // ====================================
 
 // -----------------------------------
+// Post Categories function
+// -----------------------------------
+// Return the post categories
+// It's necesary to echo the function when using it, ex: echo nw_categories();
+function nw_categories(){
+	$categories = get_the_category();
+	$separator = ', ';
+	if($categories):
+		$category = '';
+		foreach($categories as $category_meta):
+			$category .= '<a href="'.get_category_link( $category_meta->term_id ).'" title="' . esc_attr( sprintf( __( "Ver todas las publicaciones en %s" ), $category_meta->name ) ) . '" itemprop="url"><span itemprop="title">'.$category_meta->cat_name.'</span></a>'.$separator; 
+		endforeach;
+		return trim($category, $separator);
+	endif;
+
+	return FALSE;
+}
+
+// -----------------------------------
 // Breadcrumbs function
 // -----------------------------------
 // Return the post ancestors as breadcrumbs
-// Its necesary to echo the function when using it, ex: echo nw_breadcrumbs();
+// It's necesary to echo the function when using it, ex: echo nw_breadcrumbs();
 function nw_breadcrumbs(){
+	global $post;
+
 	$post_ancestors = array_reverse(get_post_ancestors($post->ID));
 	$separator = ' » ';
-	if($post_ancestors):
-		$breadcrumb = '';
-		foreach ($post_ancestors as $ancestor): 
-			$breadcrumb .= '<a href="'.get_permalink($ancestor).'">'.get_post($ancestor)->post_title.'</a>'.$separator;
+	$current_post = '<div class="current_post" id="'.get_post($ancestor)->post_name.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">'.
+						'<a href="'.get_permalink($post->ID).'" itemprop="url">
+							<span itemprop="title">'.$post->post_title.'</span>
+						</a>
+					</div>';
+
+	$is_category = get_category(get_query_var('cat'))->slug.'-breadcrumb';
+	$is_single = get_the_category($post->ID)[0]->slug.'-breadcrumb';
+	$is_page = get_post($post_ancestors[0])->post_name.'-breadcrumb';
+	$is_tag = get_tag(get_query_var('tag_id'))->slug.'-breadcrumb';
+
+	$child_id = is_page() ? $is_page : (is_single() ? $is_single : (is_category() ? $is_category : $is_tag));
+
+	$breadcrumb = '<div id="inicio" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemref="'.$child_id.'">
+						<a href="'.get_bloginfo("url").'" itemprop="url">
+							<span itemprop="title">Inicio</span>
+						</a>'.$separator.
+					'</div>';
+
+	$container_opening = '<div class="breadcrumbs">';
+	$container_closing = '</div>';
+
+	if(is_page()):
+		
+		foreach ($post_ancestors as $key => $ancestor):
+			$breadcrumb_id = get_post($ancestor)->post_name.'-breadcrumb';
+			$child_id = get_post($post_ancestors[$key+1])->post_name.'-breadcrumb';
+			$breadcrumb .= '<div id="'.$breadcrumb_id.'" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="'.$child_id.'">
+								<a href="'.get_permalink($ancestor).'" itemprop="url">
+									<span itemprop="title">'.get_post($ancestor)->post_title.'</span>
+								</a>'.$separator.
+							'</div>';
 		endforeach;
-		$breadcrumb .= '<p>'.get_the_title().'</p>';
+		$breadcrumb .= $current_post;
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
 		return trim($breadcrumb, $separator);
+	elseif(is_category()):
+
+		$cat_permalink = get_category_link(get_query_var('cat'));
+
+		$breadcrumb .= '<div class="current_post" id="'.get_category(get_query_var('cat'))->slug.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+							<a href="'.$cat_permalink.'" itemprop="url">
+								<span itemprop="title">'.get_category(get_query_var('cat'))->name.'</span>
+							</a>'.
+						'</div>';
+
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
+		return $breadcrumb;
+	elseif(is_single()):
+		$first_category = get_the_category($post->ID)[0];
+		$cat_permalink = get_category_link($first_category->term_id);
+
+
+		$breadcrumb .= '<div id="'.$first_category->slug.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="'.$post->post_name.'-breadcrumb">
+							<a href="'.$cat_permalink.'" itemprop="url">
+								<span itemprop="title">'.$first_category->name.'</span>
+							</a>'.$separator.
+						'</div>';
+
+		$breadcrumb .= $current_post;
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
+		return $breadcrumb;
 	else:
-		$breadcrumb = FALSE;
+
+		$breadcrumb .= '<div class="current_post" id="'.get_tag(get_query_var('tag_id'))->slug.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+							<a href="'.get_tag_link(get_query_var('tag_id')).'" itemprop="url">
+								<span itemprop="title">'.get_tag(get_query_var('tag_id'))->name.'</span>
+							</a>'.
+						'</div>';
+
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
 		return $breadcrumb;
 	endif;
+	
+	return $breadcrumb;
 }
 
 // -----------------------------------
@@ -209,6 +315,15 @@ function nw_tags(){
 
 // function nw_page_excerpt_init() {
 //     add_post_type_support( 'page', 'excerpt' );
+// }
+
+
+// -----------------------------------
+// Add Tag Support to Pages
+// -----------------------------------
+
+// function tags_support_all() {
+// 	register_taxonomy_for_object_type('post_tag', 'page');
 // }
 
 
