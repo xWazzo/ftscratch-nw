@@ -2,7 +2,7 @@
 
 	<?php if (have_posts()) : // Show latest posts as default ?>
 
-		<?php // include('carousel.php'); ?>
+		<?php // include('hero-unit.php'); ?>
 		
 		<?php while (have_posts()) : the_post(); ?>
 			<article>

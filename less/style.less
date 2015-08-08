@@ -1,25 +1,9 @@
-/******************************************************************
-Theme Name: FTScratch-Nw (NOMBRE DEL CLIENTE)
-Theme URI: http://www.nuevaweb.com.mx
-Description: Tema diseñado y desarrollado exclusivamente para "(NOMBRE DEL CLIENTE)" por NuevaWeb 2014.
-Author: <a href="http://www.nuevaweb.com.mx">the NuevaWeb team</a>
-Author URI: http://www.nuevaweb.com.mx
-Version: 1.0
-Tags: flexible-width, translation-ready, microformats, rtl-language-support, custom-template, nuevaweb
-
-License: -
-License URI: -
-
-Happy Developing!
-
-******************************************************************/
-
 //	Import all your stuff here
 // ------------------------------------
 
 @import "under-construction.less"; // REMOVE THIS when you start your less. 
 @import "wordpress.less";
-@import "../lib/font-awesome-4.3.0/less/font-awesome.less"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
+@import "../lib/font-awesome-4.4.0/less/font-awesome.less"; // Font-Awesome Docs: http://fontawesome.io/icons/ 
 
 // Bootstrap resources. 
 // Default: There are only activated the main .less archives to make it work.
@@ -31,32 +15,39 @@ Happy Developing!
 //	Fix any path's of your libs Here
 // ------------------------------------
 
-// @fa-font-path:        "../lib/font-awesome-4.3.0/fonts/"; // Font-Awesome Icon Path Fix
-@icon-font-path:          "../lib/bootstrap-3.3.1/fonts/"; // Bootstrap Icon Path Fix
+// @fa-font-path:        "../lib/font-awesome-4.4.0/fonts/"; // Font-Awesome Icon Path Fix
+@icon-font-path:          "../lib/bootstrap-3.3.5/fonts/"; // Bootstrap Icon Path Fix
 
 //	My Fonts Here
 // ------------------------------------
 // Learn how to use @font-face - Docs: http://nicewebtype.com/notes/2009/10/30/how-to-use-css-font-face/
 
-// @font-face{
-	// font-family: ; // 'family name' 
-	// font-style: ; // normal, italic, oblique 
-	// font-weight: ; // 100 (This is light), 400 (This is normal), 900 (This is bold). 
-	// src: url("fonts/");
+// .font-face(@fontFamily: 'OpenSans', @fontStyle:normal, @fontWeight:400, @root:'../fonts/Open_Sans/', @file:'OpenSans-Regular.ttf'){
+// 	@src: "@{root}@{file}";
+// 	@font-face{
+// 		font-family: '@{fontFamily}'; // 'family name' 
+// 		font-style: @fontStyle; // normal, italic, oblique 
+// 		font-weight: @fontWeight; // 100 (This is light), 400 (This is normal), 900 (This is bold). 
+// 		src: url('@{src}');
+// 	}
 // }
 
-// @primaryFontFamily: @CustomFontFamilyFontFamily;
-// @secondaryFontFamily: @SecondCustomFontFamily;
-//
-// @CustomFontFamilyFontFamily: "Your-Sanserif Font Family", Arial, sans-serif;
-// @SecondCustomFontFamily: Georgia, "Your-Serif FontFamily", Times, serif;
+// @OpenSansPath: '../fonts/Open_Sans/';
 
+// .font-face('OpenSans',normal,300,@OpenSansPath,'OpenSans-Light.ttf');
+// .font-face('OpenSans',italic,300,@OpenSansPath,'OpenSans-LightItalic.ttf');
+// .font-face('OpenSans',normal,400,@OpenSansPath,'OpenSans-Regular.ttf');
+// .font-face('OpenSans',italic,400,@OpenSansPath,'OpenSans-Italic.ttf');
+// .font-face('OpenSans',normal,600,@OpenSansPath,'OpenSans-Semibold.ttf');
+// .font-face('OpenSans',italic,600,@OpenSansPath,'OpenSans-SemiboldItalic.ttf');
+// .font-face('OpenSans',normal,700,@OpenSansPath,'OpenSans-Bold.ttf');
+// .font-face('OpenSans',italic,700,@OpenSansPath,'OpenSans-BoldItalic.ttf');
 
-@import "Open_Sans.less";
-@primaryFontFamily: @OpenSans;
+// @OpenSans: "OpenSans", Arial, sans-serif;
+// @SerifFontFamily: "SerifFontFamily", Georgia, Times, serif;
 
-@OpenSans: "OpenSans", Arial, sans-serif;
-
+// @primaryFontFamily: @OpenSans;
+// @secondaryFontFamily: @SerifFontFamily;
 
 //	Variables
 // ------------------------------------
@@ -139,23 +130,17 @@ blockquote{}
 
 
 // Bootstrap collapse classese
+
+// .navbar{
+// 	margin: 0;
+// 	border: 0;
+// 	min-height: initial;
+// 	border-radius: 0;
+// }
 // .navbar-toggle{
 // 	.icon-bar{ background-color: @black; }
 // }
-// .navbar-brand{ height: auto; }
-
-// Carousel
-// ====================================
-
-.carousel-slide{
-	height: 460px;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-
-.carousel-control{ cursor: pointer; }
-
+// .navbar-brand{ height: auto; padding: 10px 0; }
 
 // (Section Name)
 // ====================================
@@ -171,7 +156,7 @@ blockquote{}
 
 
 
-//	Components
+// Assets
 // ====================================
 
 #searchform{
@@ -229,6 +214,4 @@ blockquote{}
 			}// li
 		}// ul
 	}// #main-nav
-
-	.carousel-slide{ height: 180px; }
 }

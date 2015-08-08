@@ -125,7 +125,7 @@
 			/*
 			* The url to the icon to be used for this menu or the name of the icon from the iconfont. Ex: 'get_template_directory_uri() . "images/cutom-posttype-icon.png"' (Use a image located in the current theme)
 			*/
-			'menu_icon' =>					get_template_directory_uri()."/lib/ftscratch-support/img/hero-unit-post-icon.png",
+			'menu_icon' =>					get_template_directory_uri()."/lib/ftscratch-support/custom-post-type/img/hero-unit-post-icon.png",
 			/*
 			* (string or array) (optional) The string to use to build the read, edit, and delete capabilities. 
 				May be passed as an array to allow for alternative plurals when using this argument as a base to construct the capabilities, 

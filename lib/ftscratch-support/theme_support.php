@@ -520,4 +520,134 @@ function bones_get_the_author_posts_link() {
 	return $link;
 }
 
+// -----------------------------------
+// Post Categories function
+// -----------------------------------
+// Return the post categories
+// It's necesary to echo the function when using it, ex: echo nw_categories();
+function nw_categories(){
+	$categories = get_the_category();
+	$separator = ', ';
+	if($categories):
+		$category = '';
+		foreach($categories as $category_meta):
+			$category .= '<a href="'.get_category_link( $category_meta->term_id ).'" title="' . esc_attr( sprintf( __( "Ver todas las publicaciones en %s" ), $category_meta->name ) ) . '" itemprop="url"><span itemprop="title">'.$category_meta->cat_name.'</span></a>'.$separator; 
+		endforeach;
+		return trim($category, $separator);
+	endif;
+
+	return FALSE;
+}
+
+// -----------------------------------
+// Breadcrumbs function
+// -----------------------------------
+// Return the post ancestors as breadcrumbs
+// It's necesary to echo the function when using it, ex: echo nw_breadcrumbs();
+function nw_breadcrumbs(){
+	global $post;
+
+	$post_ancestors = array_reverse(get_post_ancestors($post->ID));
+	$separator = ' » ';
+	$current_post = '<div class="current_post" id="'.get_post($ancestor)->post_name.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">'.
+						'<a href="'.get_permalink($post->ID).'" itemprop="url">
+							<span itemprop="title">'.$post->post_title.'</span>
+						</a>
+					</div>';
+
+	$is_category = get_category(get_query_var('cat'))->slug.'-breadcrumb';
+	$is_single = get_the_category($post->ID)[0]->slug.'-breadcrumb';
+	$is_page = get_post($post_ancestors[0])->post_name.'-breadcrumb';
+	$is_tag = get_tag(get_query_var('tag_id'))->slug.'-breadcrumb';
+
+	$child_id = is_page() ? $is_page : (is_single() ? $is_single : (is_category() ? $is_category : $is_tag));
+
+	$breadcrumb = '<div id="inicio" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemref="'.$child_id.'">
+						<a href="'.get_bloginfo("url").'" itemprop="url">
+							<span itemprop="title">Inicio</span>
+						</a>'.$separator.
+					'</div>';
+
+	$container_opening = '<div class="breadcrumbs">';
+	$container_closing = '</div>';
+
+	if(is_page()):
+		
+		foreach ($post_ancestors as $key => $ancestor):
+			$breadcrumb_id = get_post($ancestor)->post_name.'-breadcrumb';
+			$child_id = get_post($post_ancestors[$key+1])->post_name.'-breadcrumb';
+			$breadcrumb .= '<div id="'.$breadcrumb_id.'" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="'.$child_id.'">
+								<a href="'.get_permalink($ancestor).'" itemprop="url">
+									<span itemprop="title">'.get_post($ancestor)->post_title.'</span>
+								</a>'.$separator.
+							'</div>';
+		endforeach;
+		$breadcrumb .= $current_post;
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
+		return trim($breadcrumb, $separator);
+	elseif(is_category()):
+
+		$cat_permalink = get_category_link(get_query_var('cat'));
+
+		$breadcrumb .= '<div class="current_post" id="'.get_category(get_query_var('cat'))->slug.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+							<a href="'.$cat_permalink.'" itemprop="url">
+								<span itemprop="title">'.get_category(get_query_var('cat'))->name.'</span>
+							</a>'.
+						'</div>';
+
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
+		return $breadcrumb;
+	elseif(is_single()):
+		$first_category = get_the_category($post->ID)[0];
+		$cat_permalink = get_category_link($first_category->term_id);
+
+
+		$breadcrumb .= '<div id="'.$first_category->slug.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child" itemref="'.$post->post_name.'-breadcrumb">
+							<a href="'.$cat_permalink.'" itemprop="url">
+								<span itemprop="title">'.$first_category->name.'</span>
+							</a>'.$separator.
+						'</div>';
+
+		$breadcrumb .= $current_post;
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
+		return $breadcrumb;
+	else:
+
+		$breadcrumb .= '<div class="current_post" id="'.get_tag(get_query_var('tag_id'))->slug.'-breadcrumb" itemscope itemtype="http://data-vocabulary.org/Breadcrumb" itemprop="child">
+							<a href="'.get_tag_link(get_query_var('tag_id')).'" itemprop="url">
+								<span itemprop="title">'.get_tag(get_query_var('tag_id'))->name.'</span>
+							</a>'.
+						'</div>';
+
+		$breadcrumb = $container_opening.$breadcrumb.$container_closing;
+
+		return $breadcrumb;
+	endif;
+	
+	return $breadcrumb;
+}
+
+// -----------------------------------
+// Post Tags function
+// -----------------------------------
+// Return the post tags
+// Its necesary to echo the function when using it, ex: echo nw_tags();
+function nw_tags(){
+	$posttags = get_the_tags();
+	$separator = ', ';
+	if($posttags):
+		$tag = '';
+		foreach($posttags as $meta_tag):
+			$tag .= '<a href="'.get_tag_link($meta_tag->term_id).'">'.$meta_tag->name .'</a>'.$separator; 
+		endforeach;
+		return trim($tag, $separator);
+	else:
+		$tag = FALSE;
+		return $tag;
+	endif; 
+}
+
 ?>
